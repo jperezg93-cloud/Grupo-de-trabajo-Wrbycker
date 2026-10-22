@@ -97,6 +97,28 @@ class SiteTests(unittest.TestCase):
         self.assertTrue((DOCS / "guide.css").is_file())
         self.assertIn("Sin registro", home)
 
+    def test_ecosystem_is_cross_linked_without_direct_affiliate_ads(self):
+        root = DOCS.parent
+        ecosystem = (DOCS / "ecosistema.html").read_text(encoding="utf-8")
+        homepage = (DOCS / "index.html").read_text(encoding="utf-8")
+        guide = (DOCS / "guia.html").read_text(encoding="utf-8")
+        skills = (DOCS / "habilidades.html").read_text(encoding="utf-8")
+        for html in (homepage, guide, skills):
+            self.assertIn('href="ecosistema.html"', html)
+        self.assertIn('href="app/"', ecosystem)
+        self.assertIn('href="guia.html"', ecosystem)
+        self.assertIn('href="https://linktr.ee/wrbycker"', ecosystem)
+        self.assertIn("WrBycker | IA y Afiliados", ecosystem)
+        self.assertIn("mayores de 18 años", ecosystem)
+        self.assertIn("comisiones", ecosystem)
+        self.assertNotIn("ourdreamai.everflowclient.io", ecosystem)
+        self.assertNotIn("ourdreamersai13.com", ecosystem)
+        for name in ("ecosistema.html", "guia.html", "habilidades.html"):
+            with self.subTest(page=name):
+                entry = (root / name).read_text(encoding="utf-8")
+                self.assertIn("docs/" + name, entry)
+                self.assertTrue((DOCS / name).is_file())
+
     def test_first_skill_has_scoped_instructions(self):
         skill_path = DOCS.parent / "skills" / "wrbycker-workspace-report" / "SKILL.md"
         skill = skill_path.read_text(encoding="utf-8")
