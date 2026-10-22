@@ -100,7 +100,7 @@ class SiteTests(unittest.TestCase):
     def test_first_skill_has_scoped_instructions(self):
         skill_path = DOCS.parent / "skills" / "wrbycker-workspace-report" / "SKILL.md"
         skill = skill_path.read_text(encoding="utf-8")
-        self.assertTrue(skill.startswith("---\\nname: wrbycker-workspace-report\\n"))
+        self.assertTrue(skill.startswith("---\nname: wrbycker-workspace-report\n"))
         self.assertIn("description:", skill)
         self.assertIn("report --json", skill)
         self.assertIn("no", skill.lower())
