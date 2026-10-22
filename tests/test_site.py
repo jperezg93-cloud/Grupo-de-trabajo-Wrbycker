@@ -56,24 +56,32 @@ class SiteTests(unittest.TestCase):
         self.assertIn("no ejecuta el agente", self.page)
 
     def test_pages_paths_resolve_in_both_publish_modes(self):
-        # Automatic Pages builds the repo root, while our Actions workflow uploads docs/.
-        # Either artifact must let visitors open the advertised /app/ URL.
+        # GitHub's automatic Pages workflow uploads the whole repository,
+        # while the custom workflow uploads the docs/ directory.
         root = DOCS.parent
-        for path, target in (
-            ("index.html", root / "docs" / "index.html"),
-            ("app/index.html", root / "docs" / "app" / "index.html"),
-        ):
-            with self.subTest(path=path):
-                content = (root / path).read_text(encoding="utf-8")
-                self.assertIn('http-equiv="refresh"', content)
-                self.assertIn("<a href=", content)
-                match = re.search(r'content="0; url=([^"]+)"', content)
-                self.assertIsNotNone(match)
-                resolved = ((root / path).parent / match.group(1) / "index.html").resolve()
-                self.assertEqual(resolved, target.resolve())
-                self.assertTrue(resolved.is_file())
-        self.assertTrue((DOCS / "index.html").is_file())
-        self.assertTrue((DOCS / "app" / "index.html").is_file())
+        public_root = (root / "index.html").read_text(encoding="utf-8")
+        self.assertIn('url=docs/', public_root)
+        for app in (root / "app", DOCS / "app"):
+            with self.subTest(app=app):
+                document = (app / "index.html").read_text(encoding="utf-8")
+                self.assertNotIn('http-equiv="refresh"', document)
+                for asset in ("app.css", "app.js", "logic.js", "sw.js",
+                              "manifest.webmanifest", "index.html"):
+                    self.assertTrue((app / asset).is_file(), asset)
+                self.assertIn('href="manifest.webmanifest"', document)
+                self.assertIn('src="app.js"', document)
+                self.assertIn('src="logic.js"', document)
+                self.assertIn('data-offline-status', document)
+
+    def test_two_app_shells_share_logic_and_layout(self):
+        root = DOCS.parent
+        for path in ("app.js", "app.css", "logic.js"):
+            self.assertEqual((root / "app" / path).read_bytes(),
+                             (DOCS / "app" / path).read_bytes())
+        root_html = (root / "app/index.html").read_text(encoding="utf-8")
+        docs_html = (DOCS / "app/index.html").read_text(encoding="utf-8")
+        self.assertEqual(root_html.replace('../docs/favicon.svg',
+                                           '../favicon.svg'), docs_html)
 
     def test_respects_reduced_motion(self):
         css = (DOCS / "styles.css").read_text(encoding="utf-8")
