@@ -25,7 +25,7 @@
 - [x] Respaldos JSON, restauración validada y borrado local
 - [x] PWA con iconos y caché para uso sin conexión tras primera visita
 - [x] Suite JavaScript sin dependencias npm y despliegue por GitHub Pages
-- [ ] Verificación manual de instalación PWA y funcionamiento offline en el Android del propietario (ver [QA](app/QA.md))
+- [x] Verificación manual de instalación PWA y funcionamiento offline en el Android del propietario (22 de octubre de 2026; ver [QA](app/QA.md))
 
 ## Futuro — no implementado
 - [ ] Integración completa con un servidor MCP certificado por pruebas
