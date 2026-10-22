@@ -59,6 +59,14 @@ El modelo predeterminado es `gpt-5-mini`, configurable con `--model`. Las llamad
 
 Para permitir solicitudes de notas agrega `--allow-writes` a `ask`. **Incluso así**, una terminal interactiva exige escribir `APROBAR` viendo el texto completo. Ninguna nota existente se sobrescribe.
 
+## Wrbycker Control Center 1.0 (gratuito)
+
+La aplicación web estática vive en [`docs/app/`](docs/app/README.md). Permite organizar tareas e ideas, construir prompts, mantener fichas maestras de personajes, ejecutar reglas manuales, analizar archivos de texto del usuario y exportar/restaurar respaldos JSON. Funciona con almacenamiento **local del navegador**, sin cuenta, sin backend y sin consumo de API. Se puede instalar como PWA en navegadores compatibles; para usarla sin internet debes visitarla en línea al menos una vez.
+
+**[Abrir Control Center](https://jperezg93-cloud.github.io/Grupo-de-trabajo-Wrbycker/app/)** · [Manual](docs/app/README.md)
+
+No sustituye un servidor Python ni contiene IA generativa, MCP o AG-UI. No hay sincronización entre dispositivos: respalda tu información antes de cambiar de celular o borrar datos del navegador.
+
 ## Web y documentación
 
 El sitio estático está en [`docs/index.html`](docs/index.html) y se puede abrir sin servidor. Hay un workflow preparado para desplegarlo mediante GitHub Pages **cuando se configure GitHub Pages como origen GitHub Actions** en Settings → Pages. No afirma ejecutar IA en el navegador y no solicita API keys.
