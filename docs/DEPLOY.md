@@ -25,3 +25,19 @@ node --check docs/main.js
 ```
 
 No incluyas credenciales, tokens, datos personales ni código dependiente de claves en la web estática pública.
+
+
+## Dos orígenes de publicación y rutas compatibles
+
+Este repositorio puede mostrar dos workflows de Pages: `pages build and deployment` (GitHub, generado automáticamente cuando el origen es una rama) y `Deploy Wrbycker Site` (Actions propio, publica `docs/`). Son artefactos **diferentes** y pueden terminar en distinto orden.
+
+Para que las direcciones públicas anunciadas funcionen en ambos modos, existen dos entradas de compatibilidad en la raíz del repositorio:
+
+- `/index.html` redirige a `/docs/` cuando GitHub sirve el repositorio completo.
+- `/app/index.html` redirige a `/docs/app/` en ese mismo modo.
+
+Cuando el workflow propio publica únicamente `docs/`, se usan directamente `docs/index.html` y `docs/app/index.html`, sin redirección. Las pruebas automatizadas validan estos cuatro archivos.
+
+**La configuración recomendada sigue siendo Settings → Pages → Build and deployment → Source: GitHub Actions**, que evita que el workflow automático de Jekyll genere otra publicación. El acceso público principal permanece en `https://jperezg93-cloud.github.io/Grupo-de-trabajo-Wrbycker/` y el de la aplicación en `.../app/`.
+
+Si ves un 404 tras una publicación, abre `https://jperezg93-cloud.github.io/Grupo-de-trabajo-Wrbycker/docs/app/` como enlace alternativo mientras revisas el origen configurado.
