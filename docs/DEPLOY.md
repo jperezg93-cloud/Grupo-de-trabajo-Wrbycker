@@ -34,9 +34,9 @@ Este repositorio puede mostrar dos workflows de Pages: `pages build and deployme
 Para que las direcciones públicas anunciadas funcionen en ambos modos, existen dos entradas de compatibilidad en la raíz del repositorio:
 
 - `/index.html` redirige a `/docs/` cuando GitHub sirve el repositorio completo.
-- `/app/index.html` redirige a `/docs/app/` en ese mismo modo.
+- `/app/index.html` sirve una copia completa de la PWA, sin redirección, cuando GitHub publica el repositorio completo.
 
-Cuando el workflow propio publica únicamente `docs/`, se usan directamente `docs/index.html` y `docs/app/index.html`, sin redirección. Las pruebas automatizadas validan estos cuatro archivos.
+Cuando el workflow propio publica únicamente `docs/`, se usan directamente `docs/index.html` y `docs/app/index.html`, sin redirección. Las pruebas automatizadas validan las dos páginas de inicio y ambas aplicaciones completas, incluidos los arranques sin red.
 
 **La configuración recomendada sigue siendo Settings → Pages → Build and deployment → Source: GitHub Actions**, que evita que el workflow automático de Jekyll genere otra publicación. El acceso público principal permanece en `https://jperezg93-cloud.github.io/Grupo-de-trabajo-Wrbycker/` y el de la aplicación en `.../app/`.
 
