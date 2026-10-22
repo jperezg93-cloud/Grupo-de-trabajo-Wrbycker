@@ -14,6 +14,7 @@
   let promptSelection = null;
   let characterSelection = null;
   let toastTimeout;
+  let unreadableStorage = false;
 
   function notify(message) {
     const el = $("#toast");
@@ -29,7 +30,8 @@
       if (raw === null) return D.blank();
       const parsed = D.parseBackup(raw);
       if (!parsed) {
-        notify("Los datos guardados no tienen el formato esperado. No se modificaron; exporta una copia antes de borrar.");
+        unreadableStorage = true;
+        notify("Los datos locales no tienen un formato válido. No se sobrescribirán sin restaurar o borrar explícitamente.");
         return D.blank();
       }
       return parsed;
@@ -38,12 +40,17 @@
       return D.blank();
     }
   }
-  function commit(next) {
+  function commit(next, allowReset = false) {
+    if (unreadableStorage && !allowReset) {
+      notify("Los datos anteriores no se sobrescribirán. Usa Configuración para restaurar un respaldo o borrarlos.");
+      return false;
+    }
     const valid = D.validateData(next);
     if (!valid) { notify("No se guardó: datos inválidos o se alcanzó el límite de registros."); return false; }
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(valid));
       model = valid;
+      unreadableStorage = false;
       render();
       return true;
     } catch (_) {
@@ -109,7 +116,7 @@
     history.replaceState(null, "", "#" + view);
     const title = $("#view-" + view + " h1");
     if (title) title.focus({ preventScroll: true });
-    window.scrollTo({ top: 0, behavior: "instant" });
+    window.scrollTo({ top: 0, behavior: "auto" });
   }
 
   function overview() {
@@ -360,7 +367,11 @@
         const next = copyModel();
         next.prompts = next.prompts.map((p) => p.id === promptSelection ? { ...p, title, template } : p);
         if (commit(next)) notify("Plantilla actualizada.");
-      } else if (addRecord("prompts", { title, template })) notify("Plantilla guardada.");
+      } else if (addRecord("prompts", { title, template })) {
+        promptSelection = model.prompts.at(-1).id;
+        prompts();
+        notify("Plantilla guardada.");
+      }
     });
     $("#prompt-new").addEventListener("click", () => {
       promptSelection = null; $("#saved-prompts").value = "";
@@ -441,7 +452,7 @@
         const parsed = D.parseBackup(await file.text());
         if (!parsed) throw new Error("Formato de respaldo inválido");
         if (!window.confirm("¿Reemplazar todos los datos locales por este respaldo? Exporta una copia antes si quieres conservarlos.")) return;
-        if (commit(parsed)) {
+        if (commit(parsed, true)) {
           promptSelection = null; characterSelection = null;
           $("#character-new").click(); $("#prompt-new").click();
           notify("Respaldo restaurado correctamente.");
@@ -452,7 +463,7 @@
     $("#clear-data").addEventListener("click", () => {
       if (!window.confirm("¿Eliminar TODOS los datos locales de Wrbycker de este navegador?") ||
           !window.confirm("Última confirmación: no podrás recuperarlos sin un respaldo.")) return;
-      if (commit(D.blank())) notify("Datos locales eliminados.");
+      if (commit(D.blank(), true)) notify("Datos locales eliminados.");
     });
   }
 
