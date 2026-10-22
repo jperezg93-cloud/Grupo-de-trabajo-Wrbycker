@@ -483,7 +483,7 @@
         .then(async () => {
           const cacheNames = await caches.keys();
           const here = new URL("./", location.href).pathname.replace(/[^a-z0-9]/gi, "-");
-          const matches = cacheNames.some((name) => name === "wrbycker-control-" + here + "-v2");
+          const matches = cacheNames.some((name) => name === "wrbycker-control-" + here + "-v3");
           updateStatus(matches ? "Acceso sin conexión preparado ✓" :
             "Caché sin conexión pendiente. Abre esta app con internet.");
         })
