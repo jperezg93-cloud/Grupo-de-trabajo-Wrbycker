@@ -31,7 +31,7 @@
       </nav>
       <div class="sidebar-footer">
         <span class="offline-dot" aria-hidden="true"></span>
-        <div><strong>Sin cuenta ni servidor</strong><small>Los datos viven en este navegador.</small></div>
+        <div><strong>Sin cuenta ni servidor</strong><small>Los datos viven en este navegador.</small><small data-offline-status role="status" aria-live="polite">Comprobando caché sin conexión…</small></div>
       </div>
     </aside>
     <div class="content">
@@ -187,7 +187,7 @@
             <section class="panel"><h2>Crear respaldo</h2><p>Descarga tareas e ideas en un archivo JSON. Guárdalo en un lugar seguro: no sincronizamos información entre dispositivos.</p><button id="export-data" type="button" class="primary-button">Exportar respaldo JSON ↓</button></section>
             <section class="panel"><h2>Restaurar respaldo</h2><p>Selecciona un archivo exportado desde Wrbycker Control Center. Se validará antes de reemplazar los datos actuales.</p><label for="import-data" class="file-label">Seleccionar archivo JSON</label><input id="import-data" type="file" accept=".json,application/json"><small class="micro">Máximo 1 MB. Importar reemplaza los datos locales existentes, previa confirmación.</small></section>
             <section class="panel danger"><h2>Borrar datos de este navegador</h2><p>Elimina permanentemente las tareas e ideas de esta instalación. Exporta un respaldo antes si quieres conservarlas.</p><button id="clear-data" type="button" class="danger-button">Eliminar mis datos locales</button></section>
-            <section class="panel"><h2>Estado del producto</h2><p>Control Center 1.0: herramientas locales, Prompts, Personajes, Workflows manuales, archivos y respaldo JSON. El agente de IA por API y el servidor MCP son proyectos técnicos separados y <strong>no se ejecutan aquí</strong>.</p><a class="inline-link" href="../ROADMAP.md">Consultar roadmap ↗</a></section>
+            <section class="panel"><h2>Estado del producto</h2><p data-offline-status role="status" aria-live="polite">Comprobando caché sin conexión…</p><p>Control Center 1.0: herramientas locales, Prompts, Personajes, Workflows manuales, archivos y respaldo JSON. El agente de IA por API y el servidor MCP son proyectos técnicos separados y <strong>no se ejecutan aquí</strong>.</p><a class="inline-link" href="../ROADMAP.md">Consultar roadmap ↗</a></section>
           </div>
         </section>
       </main>

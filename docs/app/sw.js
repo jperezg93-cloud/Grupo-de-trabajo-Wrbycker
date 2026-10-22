@@ -1,41 +1,64 @@
-/* Offline static shell. No analytics, network APIs or background tasks. */
+/* Offline app shell v2. Scoped to this installed PWA location.
+ * Never cache personal content; only static files checked into the repository.
+ */
 "use strict";
-const CACHE = "wrbycker-control-v1";
-const FILES = ["./", "./index.html", "./app.css", "./logic.js", "./app.js",
-               "./manifest.webmanifest", "./icon-192.png", "./icon-512.png",
-               "../favicon.svg"];
+const SCOPE = self.registration.scope;
+const SCOPE_KEY = new URL(SCOPE).pathname.replace(/[^a-z0-9]/gi, "-");
+const PREFIX = "wrbycker-control-" + SCOPE_KEY + "-";
+const CACHE = PREFIX + "v2";
+const CORE = ["index.html", "app.css", "logic.js", "app.js", "manifest.webmanifest"];
+const OPTIONAL = ["icon-192.png", "icon-512.png", "../favicon.svg"];
+const asset = (name) => new URL(name, SCOPE).href;
 
 self.addEventListener("install", (event) => {
-  event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(FILES))
-    .then(() => self.skipWaiting()));
+  event.waitUntil((async () => {
+    const cache = await caches.open(CACHE);
+    // The complete app shell must be saved before the worker activates.
+    await cache.addAll(CORE.map(asset));
+    // Missing icon/favicons must not break offline installation.
+    await Promise.allSettled(OPTIONAL.map((name) => cache.add(asset(name))));
+    await self.skipWaiting();
+  })());
 });
+
 self.addEventListener("activate", (event) => {
-  event.waitUntil(caches.keys().then((keys) =>
-    Promise.all(keys.filter((name) => name.startsWith("wrbycker-control-") && name !== CACHE)
-      .map((key) => caches.delete(key)))).then(() => self.clients.claim()));
+  event.waitUntil((async () => {
+    const names = await caches.keys();
+    await Promise.all(names.filter((name) =>
+      (name.startsWith(PREFIX) && name !== CACHE) ||
+      name === "wrbycker-control-v1"
+    ).map((name) => caches.delete(name)));
+    await self.clients.claim();
+  })());
 });
+
 self.addEventListener("fetch", (event) => {
   const request = event.request;
   if (request.method !== "GET") return;
   const url = new URL(request.url);
   if (url.origin !== self.location.origin ||
-      !url.pathname.startsWith(new URL("./", self.registration.scope).pathname)) return;
+      !url.pathname.startsWith(new URL(SCOPE).pathname)) return;
+
   if (request.mode === "navigate") {
-    event.respondWith(fetch(request).then((response) => {
-      if (response.ok) {
-        const copy = response.clone();
-        caches.open(CACHE).then((cache) => cache.put("./index.html", copy)).catch(() => {});
-      }
-      return response;
-    }).catch(() => caches.match("./index.html")));
+    event.respondWith((async () => {
+      // A navigation to either /app/ or /app/index.html never needs a redirect
+      // or a network roundtrip after successful service-worker installation.
+      const cache = await caches.open(CACHE);
+      const shell = await cache.match(asset("index.html"));
+      if (shell) return shell;
+      return fetch(request);
+    })());
     return;
   }
-  event.respondWith(caches.match(request).then((cached) =>
-    cached || fetch(request).then((response) => {
-      if (response.ok && response.type === "basic") {
-        const copy = response.clone();
-        caches.open(CACHE).then((cache) => cache.put(request, copy)).catch(() => {});
-      }
-      return response;
-    })));
+
+  event.respondWith((async () => {
+    const cache = await caches.open(CACHE);
+    const cached = await cache.match(request);
+    if (cached) return cached;
+    const response = await fetch(request);
+    if (response.ok && response.type === "basic") {
+      await cache.put(request, response.clone()).catch(() => {});
+    }
+    return response;
+  })());
 });

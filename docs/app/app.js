@@ -472,8 +472,24 @@
     wireEvents(); render();
     openView(location.hash.slice(1) || "overview");
     window.addEventListener("hashchange", () => openView(location.hash.slice(1)));
+    // Installation is not the same as offline readiness. Show the real status.
+    const updateStatus = (message) => {
+      for (const element of document.querySelectorAll("[data-offline-status]")) element.textContent = message;
+    };
     if ("serviceWorker" in navigator && location.protocol === "https:") {
-      navigator.serviceWorker.register("./sw.js", { scope: "./" }).catch(() => {});
+      updateStatus("Preparando acceso sin conexión…");
+      navigator.serviceWorker.register("./sw.js", { scope: "./" })
+        .then(() => navigator.serviceWorker.ready)
+        .then(async () => {
+          const cacheNames = await caches.keys();
+          const here = new URL("./", location.href).pathname.replace(/[^a-z0-9]/gi, "-");
+          const matches = cacheNames.some((name) => name === "wrbycker-control-" + here + "-v2");
+          updateStatus(matches ? "Acceso sin conexión preparado ✓" :
+            "Caché sin conexión pendiente. Abre esta app con internet.");
+        })
+        .catch(() => updateStatus("Modo sin conexión no disponible todavía; vuelve a abrir con internet."));
+    } else {
+      updateStatus("Modo sin conexión no disponible en este navegador.");
     }
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initialize);
