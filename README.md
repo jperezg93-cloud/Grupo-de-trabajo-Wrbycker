@@ -64,6 +64,7 @@ Para permitir solicitudes de notas agrega `--allow-writes` a `ask`. **Incluso as
 El sitio estático está en [`docs/index.html`](docs/index.html) y se puede abrir sin servidor. Hay un workflow preparado para desplegarlo mediante GitHub Pages **cuando se configure GitHub Pages como origen GitHub Actions** en Settings → Pages. No afirma ejecutar IA en el navegador y no solicita API keys.
 
 - [Página pública (una vez activada)](https://jperezg93-cloud.github.io/Grupo-de-trabajo-Wrbycker/)
+- [Cómo activar GitHub Pages](docs/DEPLOY.md)
 - [Arquitectura y límites](docs/ARCHITECTURE.md)
 - [Hoja de ruta](docs/ROADMAP.md)
 - [Cómo contribuir](CONTRIBUTING.md)
