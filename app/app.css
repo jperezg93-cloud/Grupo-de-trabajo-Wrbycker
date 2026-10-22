@@ -105,7 +105,11 @@ select{cursor:pointer}
 .settings-grid .panel .primary-button{margin:0}
 .settings-grid .danger{border-color:#67444c}
 .file-label{display:inline-block;border:1px solid var(--violet);border-radius:8px;padding:.65rem .9rem;cursor:pointer}
-#import-data{margin-top:.7rem}
+/* Keep the real input operable for screen readers, keyboard and Android's picker.
+   Only the styled label is visible, avoiding the double file-select buttons. */
+#import-data{position:absolute;inline-size:1px;block-size:1px;opacity:0;overflow:hidden;white-space:nowrap;clip-path:inset(50%)}
+#import-data:focus-visible + .file-label{outline:2px solid var(--mint);outline-offset:3px}
+.file-label:hover{background:#2b2a50}
 .micro,.hint{color:var(--muted);font-size:.77rem}
 .hint code{color:var(--mint)}
 .inline-link{color:var(--violet);font-weight:750;font-size:.84rem}

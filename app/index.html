@@ -38,7 +38,7 @@
       <header class="topbar">
         <div><span class="eyebrow">WRBYCKER / APP</span><strong>Tu espacio de trabajo</strong></div>
         <div class="top-actions">
-          <span class="version">GRATIS · v1.0</span>
+          <span class="version">GRATIS · v1.0.2</span>
           <a href="../index.html" class="home-link">Sitio público ↗</a>
         </div>
       </header>
@@ -185,13 +185,13 @@
           <div class="view-heading"><div><div class="eyebrow">PRIVACIDAD Y DATOS</div><h1 id="settings-title" tabindex="-1">Configuración<span class="accent">.</span></h1><p>Tú controlas el contenido que guardas en este dispositivo.</p></div></div>
           <div class="settings-grid">
             <section class="panel"><h2>Crear respaldo</h2><p>Descarga tareas e ideas en un archivo JSON. Guárdalo en un lugar seguro: no sincronizamos información entre dispositivos.</p><button id="export-data" type="button" class="primary-button">Exportar respaldo JSON ↓</button></section>
-            <section class="panel"><h2>Restaurar respaldo</h2><p>Selecciona un archivo exportado desde Wrbycker Control Center. Se validará antes de reemplazar los datos actuales.</p><label for="import-data" class="file-label">Seleccionar archivo JSON</label><input id="import-data" type="file" accept=".json,application/json"><small class="micro">Máximo 1 MB. Importar reemplaza los datos locales existentes, previa confirmación.</small></section>
+            <section class="panel"><h2>Restaurar respaldo</h2><p>Selecciona un archivo exportado desde Wrbycker Control Center. Se validará antes de reemplazar los datos actuales.</p><input id="import-data" type="file" accept=".json,application/json" aria-describedby="import-help"><label for="import-data" class="file-label">Seleccionar archivo JSON</label><small class="micro"><span id="import-help">Máximo 1 MB. Importar reemplaza los datos locales existentes, previa confirmación.</span></small></section>
             <section class="panel danger"><h2>Borrar datos de este navegador</h2><p>Elimina permanentemente las tareas e ideas de esta instalación. Exporta un respaldo antes si quieres conservarlas.</p><button id="clear-data" type="button" class="danger-button">Eliminar mis datos locales</button></section>
             <section class="panel"><h2>Estado del producto</h2><p data-offline-status role="status" aria-live="polite">Comprobando caché sin conexión…</p><p>Control Center 1.0: herramientas locales, Prompts, Personajes, Workflows manuales, archivos y respaldo JSON. El agente de IA por API y el servidor MCP son proyectos técnicos separados y <strong>no se ejecutan aquí</strong>.</p><a class="inline-link" href="../ROADMAP.md">Consultar roadmap ↗</a></section>
           </div>
         </section>
       </main>
-      <footer class="footer"><span>WRBYCKER CONTROL CENTER · GRATUITO · v1.0</span><a href="https://github.com/jperezg93-cloud/Grupo-de-trabajo-Wrbycker" target="_blank" rel="noopener noreferrer">Código abierto ↗</a></footer>
+      <footer class="footer"><span>WRBYCKER CONTROL CENTER · GRATUITO · v1.0.2</span><a href="https://github.com/jperezg93-cloud/Grupo-de-trabajo-Wrbycker" target="_blank" rel="noopener noreferrer">Código abierto ↗</a></footer>
     </div>
   </div>
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>

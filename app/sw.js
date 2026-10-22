@@ -1,11 +1,11 @@
-/* Offline app shell v2. Scoped to this installed PWA location.
+/* Offline app shell v3. Scoped to this installed PWA location.
  * Never cache personal content; only static files checked into the repository.
  */
 "use strict";
 const SCOPE = self.registration.scope;
 const SCOPE_KEY = new URL(SCOPE).pathname.replace(/[^a-z0-9]/gi, "-");
 const PREFIX = "wrbycker-control-" + SCOPE_KEY + "-";
-const CACHE = PREFIX + "v2";
+const CACHE = PREFIX + "v3";
 const CORE = ["index.html", "app.css", "logic.js", "app.js", "manifest.webmanifest"];
 const OPTIONAL = ["../docs/app/icon-192.png", "../docs/app/icon-512.png", "../docs/favicon.svg"];
 const asset = (name) => new URL(name, SCOPE).href;
