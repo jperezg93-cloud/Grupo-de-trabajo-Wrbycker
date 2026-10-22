@@ -146,7 +146,7 @@ test("both publication modes provide installable manifests and real shell entryp
     assert.equal(m.start_url, "./index.html");
     assert.equal(m.scope, "./");
     assert.equal(m.display, "standalone");
-    assert.equal(m.id, "./index.html");
+    assert.equal(m.id, "./");
     const entry = fs.readFileSync(path.join(root, "index.html"), "utf8");
     assert.ok(entry.includes("Wrbycker Control Center"));
     assert.ok(!entry.includes('http-equiv="refresh"'), "PWA launch must not redirect");
