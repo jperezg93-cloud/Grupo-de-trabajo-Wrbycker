@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wrbycker-agent-lab"
+version = "0.1.0"
+description = "Educational supervised agent with constrained workspace tools and audit trail"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [{name = "Wrbycker contributors"}]
+keywords = ["ai", "agents", "responses-api", "human-in-the-loop", "open-source"]
+
+[tool.setuptools.packages.find]
+include = ["wrbycker_agent*"]
