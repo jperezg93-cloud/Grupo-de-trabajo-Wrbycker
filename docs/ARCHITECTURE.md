@@ -1,17 +1,28 @@
-# Arquitectura del MVP
+# Arquitectura: Wrbycker Agent Lab v0.2
 
 ```text
-Operador (CLI)
-    └─ Pregunta → OpenAI Responses API (opcional)
-                    └─ propuestas de funciones
-                        ├─ list_files (lectura)
-                        ├─ read_file (lectura + auditoría)
-                        └─ create_note (aprobación humana + notas nuevas)
-                                    └─ .wrbycker/audit.jsonl
+CLI local (Python 3.11+)
+  ├─ doctor / files / read
+  ├─ report [--json] → inventario de rutas permitidas (sin contenido ni API)
+  ├─ audit-verify → verificación del encadenado de eventos
+  └─ ask → OpenAI Responses API [opcional, puede tener costo]
+       └─ tools: list_files | read_file | create_note
+             └─ validación local → aprobación explícita antes de nueva nota
+       └─ .wrbycker/audit.jsonl
 ```
 
-El agente realiza llamadas a una lista cerrada de herramientas de Python. Los parámetros se validan de nuevo en el servidor local antes de tocar archivos. Se prohíben rutas absolutas, `..`, componentes ocultos, enlaces simbólicos y extensiones no incluidas en una lista explícita. Las lecturas tienen límite de 12 KB. Las notas no pueden superar 4000 caracteres.
+El sitio de GitHub Pages es **estático**: no se conecta con cuentas, claves ni la terminal del usuario. Muestra documentación y comandos, no un agente remoto.
 
-**Límites conocidos:** no es aislamiento OS, la política no resuelve ataques TOCTOU en carpetas compartidas, la integridad de registros no está anclada fuera del equipo, no hay identidad multiusuario, no hay servidor MCP, integración AG-UI, navegador ni ejecución de herramientas externas. Ninguna decisión de seguridad depende únicamente de instrucciones del modelo.
+## Control de acceso
 
-Los tests usan transporte falso para verificar el flujo sin costos; la API real no se ejecuta dentro del CI. Al usar la API, el operador asume costos y transferencia de archivos leídos al servicio.
+- Lista cerrada de funciones; no hay ejecución de shell ni navegación del agente.
+- Rutas relativas dentro de un directorio raíz; `..`, carpetas ocultas y symlinks quedan excluidos.
+- Extensiones de texto permitidas; lectura limitada a 12 KB por archivo y listado de máximo 100 rutas.
+- Las notas nuevas se guardan únicamente en `notes/*.md`, mediante confirmación `APROBAR`; no se sobrescriben.
+- Hashes de auditoría permiten detectar cambios sencillos, pero sin firma externa no previenen un atacante con acceso completo a disco.
+
+## Riesgos conocidos
+
+No es aislamiento de sistema operativo ni entorno multiusuario seguro. Hay posibles carreras TOCTOU si otra persona/proceso cambia la estructura de carpetas al mismo tiempo. Las políticas no impiden que el modelo consulte archivos con información sensible si los colocas en una carpeta autorizada; usa exclusivamente proyectos de prueba. Las solicitudes `ask` envían la pregunta y el contenido leído a OpenAI; pueden tener costo. No hay MCP/AG-UI ni mecanismos de sandboxing OS en v0.2.
+
+El inventario `report` no requiere API ni lee contenidos; únicamente cuenta rutas permitidas y sus tamaños.
