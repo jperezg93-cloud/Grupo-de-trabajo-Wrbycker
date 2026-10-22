@@ -107,7 +107,10 @@ class SiteTests(unittest.TestCase):
         self.assertIn("OPENAI_API_KEY", skill)
         page = (DOCS / "habilidades.html").read_text(encoding="utf-8")
         self.assertIn("skills/wrbycker-workspace-report", page)
-        self.assertIn("no está instalada automáticamente", page)
+        self.assertIn("no se instala automáticamente en ChatGPT", page)
+        self.assertIn(".agents/skills/", page)
+        codex_skill = DOCS.parent / ".agents" / "skills" / "wrbycker-workspace-report" / "SKILL.md"
+        self.assertEqual(codex_skill.read_text(encoding="utf-8"), skill)
 
     def test_respects_reduced_motion(self):
         css = (DOCS / "styles.css").read_text(encoding="utf-8")
