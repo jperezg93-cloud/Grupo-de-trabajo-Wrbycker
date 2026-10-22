@@ -139,16 +139,81 @@ test("rejects invalid file summaries", () => {
   assert.equal(D.textFileStats("hola", -1), null);
 });
 
-test("PWA manifest has usable scope, start URL and raster icons", () => {
-  const root = path.join(__dirname, "../docs/app");
-  const m = JSON.parse(fs.readFileSync(path.join(root, "manifest.webmanifest"), "utf8"));
-  assert.equal(m.start_url, "./");
-  assert.equal(m.scope, "./");
-  assert.equal(m.display, "standalone");
-  for (const icon of m.icons) {
-    assert.ok(fs.existsSync(path.join(root, icon.src)), icon.src + " missing");
-    const bytes = fs.readFileSync(path.join(root, icon.src));
-    assert.equal(bytes.subarray(1, 4).toString("ascii"), "PNG");
+test("both publication modes provide installable manifests and real shell entrypoints", () => {
+  for (const relative of ["../docs/app", "../app"]) {
+    const root = path.join(__dirname, relative);
+    const m = JSON.parse(fs.readFileSync(path.join(root, "manifest.webmanifest"), "utf8"));
+    assert.equal(m.start_url, "./index.html");
+    assert.equal(m.scope, "./");
+    assert.equal(m.display, "standalone");
+    assert.equal(m.id, "./index.html");
+    const entry = fs.readFileSync(path.join(root, "index.html"), "utf8");
+    assert.ok(entry.includes("Wrbycker Control Center"));
+    assert.ok(!entry.includes('http-equiv="refresh"'), "PWA launch must not redirect");
+    for (const icon of m.icons) {
+      const target = path.resolve(root, icon.src);
+      assert.ok(fs.existsSync(target), target + " missing");
+      const bytes = fs.readFileSync(target);
+      assert.equal(bytes.subarray(1, 4).toString("ascii"), "PNG");
+    }
+  }
+});
+
+test("each offline worker can launch without any network, in both Pages modes", async () => {
+  const vm = require("node:vm");
+  for (const folder of ["app", "docs/app"]) {
+    const root = path.join(__dirname, "..", folder);
+    const scope = "https://example.org/Grupo-de-trabajo-Wrbycker/" + folder + "/";
+    const handlers = {};
+    const stored = new Map();
+    const cache = {
+      addAll: async (urls) => { for (const url of urls) await cache.add(url); },
+      add: async (url) => {
+        const target = path.join(__dirname, "..", new URL(url).pathname
+          .split("/Grupo-de-trabajo-Wrbycker/")[1]);
+        if (!fs.existsSync(target)) throw new Error("asset unavailable: " + url);
+        stored.set(url, { text: () => fs.promises.readFile(target, "utf8"),
+                          ok: true, type: "basic", clone() { return this; } });
+      },
+      match: async (url) => stored.get(typeof url === "string" ? url : url.url),
+      put: async (url, response) => stored.set(url.url || url, response),
+    };
+    const caches = {
+      open: async () => cache,
+      keys: async () => ["legacy-other-app-cache"],
+      delete: async () => true,
+    };
+    const self = {
+      registration: { scope }, location: { origin: "https://example.org" },
+      addEventListener: (name, cb) => { handlers[name] = cb; },
+      skipWaiting: async () => true, clients: { claim: async () => true },
+    };
+    vm.runInNewContext(fs.readFileSync(path.join(root, "sw.js"), "utf8"), {
+      self, caches, URL, Promise, fetch: async () => { throw Error("Network offline"); },
+    });
+    let install;
+    handlers.install({ waitUntil(p) { install = p; } });
+    await install;
+    let activate;
+    handlers.activate({ waitUntil(p) { activate = p; } });
+    await activate;
+    let reply;
+    handlers.fetch({
+      request: { method: "GET", url: scope, mode: "navigate" },
+      respondWith(p) { reply = p; },
+    });
+    const offlinePage = await reply;
+    const html = await offlinePage.text();
+    assert.ok(html.includes('src="app.js"'), folder + " should open offline");
+    for (const name of ["app.js", "logic.js", "app.css"]) {
+      let assetResponse;
+      handlers.fetch({
+        request: { method: "GET", url: scope + name, mode: "no-cors" },
+        respondWith(p) { assetResponse = p; },
+      });
+      assert.ok((await (await assetResponse).text()).length > 200,
+        folder + " " + name + " should be cached");
+    }
   }
 });
 
