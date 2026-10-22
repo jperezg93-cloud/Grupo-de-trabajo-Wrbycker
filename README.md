@@ -63,7 +63,7 @@ Para permitir solicitudes de notas agrega `--allow-writes` a `ask`. **Incluso as
 
 La aplicación web estática vive en [`docs/app/`](docs/app/README.md). Permite organizar tareas e ideas, construir prompts, mantener fichas maestras de personajes, ejecutar reglas manuales, analizar archivos de texto del usuario y exportar/restaurar respaldos JSON. Funciona con almacenamiento **local del navegador**, sin cuenta, sin backend y sin consumo de API. Se puede instalar como PWA en navegadores compatibles; para usarla sin internet debes visitarla en línea al menos una vez.
 
-**[Abrir Control Center](https://jperezg93-cloud.github.io/Grupo-de-trabajo-Wrbycker/app/)** · [Manual](docs/app/README.md)
+**[Abrir Control Center](https://jperezg93-cloud.github.io/Grupo-de-trabajo-Wrbycker/app/)** · [Manual](docs/app/README.md) · [Pruebas en Android](docs/app/QA.md)
 
 No sustituye un servidor Python ni contiene IA generativa, MCP o AG-UI. No hay sincronización entre dispositivos: respalda tu información antes de cambiar de celular o borrar datos del navegador.
 
