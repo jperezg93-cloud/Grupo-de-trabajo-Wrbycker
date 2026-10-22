@@ -246,3 +246,27 @@ test("bundled app does not use third-party scripts", () => {
   assert.ok(html.includes('src="logic.js"'));
   assert.ok(html.includes('src="app.js"'));
 });
+
+test("JSON restore control has one visible accessible picker in both builds", () => {
+  for (const folder of ["app", "docs/app"]) {
+    const root = path.join(__dirname, "..", folder);
+    const html = fs.readFileSync(path.join(root, "index.html"), "utf8");
+    const css = fs.readFileSync(path.join(root, "app.css"), "utf8");
+    assert.equal((html.match(/id="import-data"/g) || []).length, 1);
+    assert.ok(html.includes('for="import-data" class="file-label"'));
+    assert.ok(html.includes('aria-describedby="import-help"'));
+    assert.ok(css.includes("#import-data{position:absolute;"));
+    assert.ok(css.includes("#import-data:focus-visible + .file-label"));
+    assert.equal(html.includes('onclick="'), false);
+  }
+});
+
+test("offline app updates its cache version so installed browsers receive the new picker", () => {
+  for (const folder of ["app", "docs/app"]) {
+    const root = path.join(__dirname, "..", folder);
+    const sw = fs.readFileSync(path.join(root, "sw.js"), "utf8");
+    const js = fs.readFileSync(path.join(root, "app.js"), "utf8");
+    assert.ok(sw.includes('const CACHE = PREFIX + "v3";'));
+    assert.ok(js.includes('"-v3"'));
+  }
+});
