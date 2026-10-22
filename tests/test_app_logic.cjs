@@ -266,7 +266,25 @@ test("offline app updates its cache version so installed browsers receive the ne
     const root = path.join(__dirname, "..", folder);
     const sw = fs.readFileSync(path.join(root, "sw.js"), "utf8");
     const js = fs.readFileSync(path.join(root, "app.js"), "utf8");
-    assert.ok(sw.includes('const CACHE = PREFIX + "v3";'));
-    assert.ok(js.includes('"-v3"'));
+    assert.ok(sw.includes('const CACHE = PREFIX + "v4";'));
+    assert.ok(js.includes('"-v4"'));
+  }
+});
+
+test("Spanish item counters use singular and plural correctly", () => {
+  for(const [number, singular, plural, expected] of [
+    [0,"idea","ideas","0 ideas"],[1,"idea","ideas","1 idea"],[2,"idea","ideas","2 ideas"],
+    [1,"flujo","flujos","1 flujo"],[3,"flujo","flujos","3 flujos"],
+    [1,"personaje","personajes","1 personaje"],
+    [1,"plantilla guardada","plantillas guardadas","1 plantilla guardada"]
+  ]) assert.equal(D.countLabel(number, singular, plural), expected);
+  assert.equal(D.countLabel(-1,"tarea","tareas"), "");
+});
+
+test("both app copies call the tested count formatter", () => {
+  for(const folder of ["app","docs/app"]){
+    const src = fs.readFileSync(path.join(__dirname,"..",folder,"app.js"),"utf8");
+    for(const type of ["tasks","ideas","prompts","characters","workflows"])
+      assert.ok(src.includes("D.countLabel(model."+type+".length"),folder+" "+type);
   }
 });

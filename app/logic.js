@@ -129,6 +129,11 @@
     }
     return validateData(clean);
   }
+  function countLabel(count, singular, plural) {
+    if (!Number.isSafeInteger(count) || count < 0) return "";
+    return count + " " + (count === 1 ? singular : plural);
+  }
+
   function textFileStats(content, bytes) {
     if (typeof content !== "string" || !Number.isFinite(bytes) || bytes < 0) return null;
     const lines = content ? content.split(/\r\n|\r|\n/).length : 0;
@@ -138,7 +143,7 @@
   const api = Object.freeze({
     VERSION, MAX_ITEMS, MAX_IMPORT_BYTES, TYPES, STATUS, DEFAULT_PROMPTS,
     blank, limitString, validId, validateRecord, validateData, parseBackup,
-    promptFromTemplate, characterToMarkdown, runWorkflow, textFileStats
+    promptFromTemplate, characterToMarkdown, runWorkflow, textFileStats, countLabel
   });
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   root.WrbyckerData = api;
