@@ -23,6 +23,14 @@ jobs:
         run: |
           python -m unittest discover -s tests -p 'test_site.py' -v
           node --check docs/main.js
+          node --check docs/app/logic.js
+          node --check docs/app/app.js
+          node --check docs/app/sw.js
+      - name: Check packaged PWA assets
+        run: |
+          test -s docs/app/manifest.webmanifest
+          test -s docs/app/icon-192.png
+          test -s docs/app/icon-512.png
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload static site

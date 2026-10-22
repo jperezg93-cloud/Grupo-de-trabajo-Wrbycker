@@ -15,6 +15,18 @@
 - [x] Plantillas de incidencias y pull requests
 - [x] Nuevas pruebas del informe y sitio estático
 
+## Control Center 1.0 — aplicación gratuita (implementado en el navegador)
+- [x] Dashboard responsive separado de la web de presentación
+- [x] Gestión local de tareas e ideas
+- [x] Prompt Studio con variables, plantillas y exportación .txt
+- [x] Ficha maestra de personajes y exportación Markdown
+- [x] Reglas de workflow manuales para convertir tareas e ideas
+- [x] Análisis de archivos de texto seleccionados por el usuario, sin subirlos
+- [x] Respaldos JSON, restauración validada y borrado local
+- [x] PWA con iconos y caché para uso sin conexión tras primera visita
+- [x] Suite JavaScript sin dependencias npm y despliegue por GitHub Pages
+- [ ] Verificación manual de instalación PWA y funcionamiento offline en el Android del propietario (ver [QA](app/QA.md))
+
 ## Futuro — no implementado
 - [ ] Integración completa con un servidor MCP certificado por pruebas
 - [ ] Configuración avanzada de políticas y presupuestos de tokens
