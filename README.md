@@ -4,7 +4,7 @@
 
 [![Tests](https://github.com/jperezg93-cloud/Grupo-de-trabajo-Wrbycker/actions/workflows/tests.yml/badge.svg)](https://github.com/jperezg93-cloud/Grupo-de-trabajo-Wrbycker/actions/workflows/tests.yml)
 
-**Versión actual: v0.2.0.** Proyecto independiente en desarrollo; no es producto de seguridad auditado, ni un servidor MCP. Python 3.11+ y librería estándar para ejecución; OpenAI API es opcional.
+**Versiones actuales: Agent Lab CLI v0.2.0 y Control Center web 1.0.** Proyecto independiente en desarrollo; no es producto de seguridad auditado, ni un servidor MCP. Python 3.11+ y librería estándar para ejecución; OpenAI API es opcional.
 
 ## Empezar sin gastar créditos API
 
@@ -66,6 +66,14 @@ La aplicación web estática vive en [`docs/app/`](docs/app/README.md). Permite 
 **[Abrir Control Center](https://jperezg93-cloud.github.io/Grupo-de-trabajo-Wrbycker/app/)** · [Manual](docs/app/README.md) · [Pruebas en Android](docs/app/QA.md)
 
 No sustituye un servidor Python ni contiene IA generativa, MCP o AG-UI. No hay sincronización entre dispositivos: respalda tu información antes de cambiar de celular o borrar datos del navegador.
+
+## Guía pública y habilidades reutilizables
+
+La página de entrada presenta la aplicación al público con una [guía rápida para principiantes](docs/guia.html), ejemplos sin programación y un enlace directo al Control Center. Puedes acceder también a [la guía publicada](https://jperezg93-cloud.github.io/Grupo-de-trabajo-Wrbycker/guia.html).
+
+La sección [Habilidades para agentes](docs/habilidades.html) explica la diferencia entre la aplicación web local y las **Agent Skills** utilizadas en entornos compatibles con agentes. El repositorio incluye una primera habilidad demostrativa en [`.agents/skills/wrbycker-workspace-report/SKILL.md`](.agents/skills/wrbycker-workspace-report/SKILL.md), que describe cómo usar el comando local `report --json` para inventariar metadatos autorizados sin API.
+
+**Publicar una habilidad en el repositorio no la instala en ChatGPT o Codex, ni habilita por sí mismo un servidor MCP.** Cada entorno requiere instalación/configuración propias y permisos para usar herramientas. No se solicitan claves en la web ni se realizan llamadas a modelos para la guía.
 
 ## Web y documentación
 

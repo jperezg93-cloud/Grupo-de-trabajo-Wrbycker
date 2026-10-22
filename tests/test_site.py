@@ -83,6 +83,35 @@ class SiteTests(unittest.TestCase):
         self.assertEqual(root_html.replace('../docs/favicon.svg',
                                            '../favicon.svg'), docs_html)
 
+    def test_public_guides_are_linked_and_static(self):
+        home = (DOCS / "index.html").read_text(encoding="utf-8")
+        for filename in ("guia.html", "habilidades.html"):
+            with self.subTest(filename=filename):
+                self.assertIn('href="' + filename + '"', home)
+                html = (DOCS / filename).read_text(encoding="utf-8")
+                self.assertIn('lang="es"', html)
+                self.assertIn('name="viewport"', html)
+                self.assertIn('href="guide.css"', html)
+                self.assertNotIn('src="https://', html)
+                self.assertIn('href="app/"', html)
+        self.assertTrue((DOCS / "guide.css").is_file())
+        self.assertIn("Sin registro", home)
+
+    def test_first_skill_has_scoped_instructions(self):
+        skill_path = DOCS.parent / "skills" / "wrbycker-workspace-report" / "SKILL.md"
+        skill = skill_path.read_text(encoding="utf-8")
+        self.assertTrue(skill.startswith("---\nname: wrbycker-workspace-report\n"))
+        self.assertIn("description:", skill)
+        self.assertIn("report --json", skill)
+        self.assertIn("no", skill.lower())
+        self.assertIn("OPENAI_API_KEY", skill)
+        page = (DOCS / "habilidades.html").read_text(encoding="utf-8")
+        self.assertIn("skills/wrbycker-workspace-report", page)
+        self.assertIn("no se instala automáticamente en ChatGPT", page)
+        self.assertIn(".agents/skills/", page)
+        codex_skill = DOCS.parent / ".agents" / "skills" / "wrbycker-workspace-report" / "SKILL.md"
+        self.assertEqual(codex_skill.read_text(encoding="utf-8"), skill)
+
     def test_respects_reduced_motion(self):
         css = (DOCS / "styles.css").read_text(encoding="utf-8")
         self.assertIn("prefers-reduced-motion", css)
