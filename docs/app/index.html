@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#080d1b">
+  <meta name="description" content="Wrbycker Control Center: espacio personal gratuito para organizar tareas e ideas con guardado local, sin servidor ni registro.">
+  <meta name="color-scheme" content="dark">
+  <title>Wrbycker Control Center · Panel local</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="app.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a href="#main" class="skip-link">Saltar al contenido</a>
+  <div class="shell">
+    <aside class="sidebar" aria-label="Navegación del Control Center">
+      <a class="brand" href="../index.html"><span class="brand-symbol" aria-hidden="true">W<span>.</span></span><span>WRBYCKER<small>CONTROL CENTER</small></span></a>
+      <div class="side-caption">ESPACIO PERSONAL</div>
+      <nav class="side-nav" aria-label="Secciones">
+        <button type="button" class="nav-link is-active" data-view="overview" aria-current="page"><span aria-hidden="true">▦</span> Resumen</button>
+        <button type="button" class="nav-link" data-view="tasks"><span aria-hidden="true">☑</span> Tareas</button>
+        <button type="button" class="nav-link" data-view="ideas"><span aria-hidden="true">✦</span> Ideas</button>
+        <button type="button" class="nav-link" data-view="settings"><span aria-hidden="true">⚙</span> Configuración</button>
+      </nav>
+      <div class="sidebar-footer">
+        <span class="offline-dot" aria-hidden="true"></span>
+        <div><strong>Sin cuenta ni servidor</strong><small>Los datos viven en este navegador.</small></div>
+      </div>
+    </aside>
+    <div class="content">
+      <header class="topbar">
+        <div><span class="eyebrow">WRBYCKER / APP</span><strong>Tu espacio de trabajo</strong></div>
+        <div class="top-actions">
+          <span class="version">VISTA LOCAL · v0.3</span>
+          <a href="../index.html" class="home-link">Sitio público ↗</a>
+        </div>
+      </header>
+      <main id="main" tabindex="-1">
+        <section class="view is-visible" id="view-overview" aria-labelledby="overview-title">
+          <div class="view-heading"><div><div class="eyebrow">PANEL GENERAL</div><h1 id="overview-title">Todo comienza aquí<span class="accent">.</span></h1><p>Organiza tu trabajo y conserva tus ideas sin API ni suscripciones adicionales.</p></div><span class="chip">100% LOCAL</span></div>
+          <div class="metrics" aria-label="Métricas de tu espacio">
+            <article class="metric"><span>Tareas pendientes</span><strong id="metric-pending">0</strong><small>Por realizar o en curso</small></article>
+            <article class="metric"><span>Completadas</span><strong id="metric-done">0</strong><small>Avances registrados</small></article>
+            <article class="metric"><span>Ideas guardadas</span><strong id="metric-ideas">0</strong><small>Tu biblioteca personal</small></article>
+          </div>
+          <div class="overview-grid">
+            <article class="panel wide">
+              <div class="panel-head"><div><h2>Próximos pasos</h2><p>Acciones pendientes en tu espacio.</p></div><button type="button" class="text-action" data-go="tasks">Ver tareas ↗</button></div>
+              <ul id="overview-tasks" class="stack-list"><li class="empty">No hay tareas todavía. Agrega la primera en «Tareas».</li></ul>
+              <button class="ghost-button" type="button" data-go="tasks">+ Crear tarea</button>
+            </article>
+            <article class="panel">
+              <div class="panel-head"><div><h2>Notas rápidas</h2><p>Ideas guardadas localmente.</p></div><button type="button" class="text-action" data-go="ideas">Ver ideas ↗</button></div>
+              <ul id="overview-ideas" class="stack-list"><li class="empty">Aún no hay ideas guardadas.</li></ul>
+              <button class="ghost-button" type="button" data-go="ideas">+ Guardar idea</button>
+            </article>
+          </div>
+          <div class="privacy-note"><span aria-hidden="true">◇</span><p><strong>Tu información no sale de esta página.</strong> Este módulo funciona con almacenamiento local del navegador. Exporta una copia JSON desde Configuración para evitar pérdidas de datos.</p></div>
+        </section>
+        <section class="view" id="view-tasks" aria-labelledby="tasks-title" hidden>
+          <div class="view-heading"><div><div class="eyebrow">ORGANIZACIÓN</div><h1 id="tasks-title">Mis tareas<span class="accent">.</span></h1><p>Define qué quieres terminar y marca tus avances.</p></div></div>
+          <div class="workspace-grid">
+            <form id="task-form" class="panel editor">
+              <h2>Nueva tarea</h2>
+              <label for="task-title">Título</label>
+              <input id="task-title" name="title" maxlength="120" required placeholder="Ej. Revisar interfaz de Wrbycker">
+              <label for="task-detail">Descripción (opcional)</label>
+              <textarea id="task-detail" name="detail" maxlength="1200" rows="4" placeholder="Anota el siguiente paso concreto..."></textarea>
+              <label for="task-status">Estado inicial</label>
+              <select id="task-status" name="status"><option value="pending">Pendiente</option><option value="doing">En progreso</option></select>
+              <button type="submit" class="primary-button">Guardar tarea +</button>
+            </form>
+            <div class="panel collection">
+              <div class="panel-head"><div><h2>Lista de tareas</h2><p id="tasks-counter">0 tareas</p></div></div>
+              <div class="filter-row" role="group" aria-label="Filtrar tareas">
+                <button type="button" class="filter is-selected" data-task-filter="all" aria-pressed="true">Todas</button>
+                <button type="button" class="filter" data-task-filter="pending" aria-pressed="false">Pendientes</button>
+                <button type="button" class="filter" data-task-filter="doing" aria-pressed="false">En curso</button>
+                <button type="button" class="filter" data-task-filter="done" aria-pressed="false">Terminadas</button>
+              </div>
+              <ul id="tasks-list" class="entry-list"><li class="empty">Todavía no hay tareas.</li></ul>
+            </div>
+          </div>
+        </section>
+        <section class="view" id="view-ideas" aria-labelledby="ideas-title" hidden>
+          <div class="view-heading"><div><div class="eyebrow">CREATIVIDAD</div><h1 id="ideas-title">Mis ideas<span class="accent">.</span></h1><p>Captura conceptos y propuestas antes de que se pierdan.</p></div></div>
+          <div class="workspace-grid">
+            <form id="idea-form" class="panel editor">
+              <h2>Guardar una idea</h2>
+              <label for="idea-title">Nombre de la idea</label>
+              <input id="idea-title" name="title" maxlength="120" required placeholder="Ej. Módulo de personajes originales">
+              <label for="idea-detail">Descripción</label>
+              <textarea id="idea-detail" name="detail" maxlength="3000" rows="6" required placeholder="Describe la idea para retomarla después..."></textarea>
+              <button type="submit" class="primary-button">Guardar idea +</button>
+            </form>
+            <div class="panel collection">
+              <div class="panel-head"><div><h2>Biblioteca de ideas</h2><p id="ideas-counter">0 ideas</p></div></div>
+              <label class="search-label" for="ideas-search">Buscar ideas</label>
+              <input id="ideas-search" type="search" placeholder="Buscar por nombre o contenido">
+              <ul id="ideas-list" class="entry-list"><li class="empty">Todavía no hay ideas.</li></ul>
+            </div>
+          </div>
+        </section>
+        <section class="view" id="view-settings" aria-labelledby="settings-title" hidden>
+          <div class="view-heading"><div><div class="eyebrow">PRIVACIDAD Y DATOS</div><h1 id="settings-title">Configuración<span class="accent">.</span></h1><p>Tú controlas el contenido que guardas en este dispositivo.</p></div></div>
+          <div class="settings-grid">
+            <section class="panel"><h2>Crear respaldo</h2><p>Descarga tareas e ideas en un archivo JSON. Guárdalo en un lugar seguro: no sincronizamos información entre dispositivos.</p><button id="export-data" type="button" class="primary-button">Exportar respaldo JSON ↓</button></section>
+            <section class="panel"><h2>Restaurar respaldo</h2><p>Selecciona un archivo exportado desde Wrbycker Control Center. Se validará antes de reemplazar los datos actuales.</p><label for="import-data" class="file-label">Seleccionar archivo JSON</label><input id="import-data" type="file" accept=".json,application/json"><small class="micro">Máximo 1 MB. Importar reemplaza los datos locales existentes, previa confirmación.</small></section>
+            <section class="panel danger"><h2>Borrar datos de este navegador</h2><p>Elimina permanentemente las tareas e ideas de esta instalación. Exporta un respaldo antes si quieres conservarlas.</p><button id="clear-data" type="button" class="danger-button">Eliminar mis datos locales</button></section>
+            <section class="panel"><h2>Estado del producto</h2><p>Dashboard operativo v0.3. Prompt Studio, personajes y PWA están previstos para etapas posteriores y <strong>no están habilitados todavía</strong>.</p><a class="inline-link" href="../ROADMAP.md">Consultar roadmap ↗</a></section>
+          </div>
+        </section>
+      </main>
+      <footer class="footer"><span>WRBYCKER CONTROL CENTER · PROTOTIPO GRATUITO</span><a href="https://github.com/jperezg93-cloud/Grupo-de-trabajo-Wrbycker" target="_blank" rel="noopener noreferrer">Código abierto ↗</a></footer>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>
