@@ -1,0 +1,23 @@
+name: "Propuesta de mejora"
+description: "Propón una capacidad nueva o un cambio"
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: "Problema que resuelve"
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: "Propuesta y alcance"
+    validations:
+      required: true
+  - type: checkboxes
+    id: security
+    attributes:
+      label: "Seguridad"
+      options:
+        - label: "He considerado si requiere nuevos permisos o acceso a datos."

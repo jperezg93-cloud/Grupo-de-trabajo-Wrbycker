@@ -1,71 +1,80 @@
 # Wrbycker Agent Lab 🤖
 
-**Prototipo abierto de asistente de IA con herramientas limitadas, aprobación humana y auditoría local.**
+**Herramientas experimentales, abiertas y educativas para aprender a construir agentes de IA con permisos limitados, supervisión humana y auditoría local.**
 
 [![Tests](https://github.com/jperezg93-cloud/Grupo-de-trabajo-Wrbycker/actions/workflows/tests.yml/badge.svg)](https://github.com/jperezg93-cloud/Grupo-de-trabajo-Wrbycker/actions/workflows/tests.yml)
 
-> **Estado: MVP educativo v0.1.0.** No es un producto de seguridad auditado ni un servidor MCP. La integración con OpenAI es opcional y requiere una API key propia; no incluye créditos.
+**Versión actual: v0.2.0.** Proyecto independiente en desarrollo; no es producto de seguridad auditado, ni un servidor MCP. Python 3.11+ y librería estándar para ejecución; OpenAI API es opcional.
 
-## Qué puedes hacer
-
-- Enumerar y leer archivos de texto de un directorio elegido, con límites de tamaño y validación de rutas.
-- Preguntar a un modelo de OpenAI sobre esos archivos mediante **Responses API y function calling**.
-- Proponer notas `notes/*.md`: **no se escriben** sin `--allow-writes` y confirmación interactiva `APROBAR`.
-- Registrar lecturas y creaciones en `.wrbycker/audit.jsonl` con huellas SHA-256 encadenadas (detección básica de cambios, no prueba criptográfica externa).
-- Ejecutar pruebas automáticas sin cuenta de OpenAI ni dependencias externas.
-
-## Inicio rápido
-
-Requisitos: Python **3.11 o superior**. Clona el repositorio y entra en su directorio:
+## Empezar sin gastar créditos API
 
 ```bash
 git clone https://github.com/jperezg93-cloud/Grupo-de-trabajo-Wrbycker.git
 cd Grupo-de-trabajo-Wrbycker
 python -m wrbycker_agent doctor
+python -m wrbycker_agent report
+python -m wrbycker_agent report --json
 python -m wrbycker_agent files
 python -m wrbycker_agent read README.md
 python -m unittest discover -s tests -v
 ```
 
-Para conectar OpenAI API, configura tu clave **solo en tu equipo** (nunca la subas al repositorio):
+También puedes inspeccionar una carpeta ficticia incluida en el repositorio:
 
 ```bash
-# macOS/Linux
+python -m wrbycker_agent --workspace examples/sample_workspace report
+```
+
+El informe resume **solo rutas de texto permitidas**, tipos de archivos y tamaños. No lee su contenido, no llama a OpenAI ni es una evaluación de seguridad.
+
+## Conectar un modelo de IA (opcional)
+
+Configura tu clave **en variables de entorno de tu equipo**, nunca en GitHub:
+
+```bash
+# Linux/macOS
 export OPENAI_API_KEY="tu_clave_aqui"
-python -m wrbycker_agent ask "Lee README.md y dame tres mejoras concretas"
+python -m wrbycker_agent ask "Lee README.md y explica el proyecto"
 ```
 
 En PowerShell:
 
 ```powershell
 $env:OPENAI_API_KEY="tu_clave_aqui"
-python -m wrbycker_agent ask "Lee README.md y propone un plan de trabajo"
+python -m wrbycker_agent ask "Lee README.md y explica el proyecto"
 ```
 
-El modelo predeterminado es `gpt-5-mini`; se puede sustituir usando `--model`. Las llamadas a API pueden generar cargos en tu cuenta.
+El modelo predeterminado es `gpt-5-mini`, configurable con `--model`. Las llamadas de API pueden generar cargos y enviar los textos consultados al servicio.
 
-La lectura es el comportamiento predeterminado. Para **solicitar** la creación de una nota:
+## Herramientas con permisos claros
 
-```bash
-python -m wrbycker_agent ask "Crea la nota notes/ideas.md con 3 ideas" --allow-writes
-```
+| Función | Acceso | Restricción |
+| --- | --- | --- |
+| `files` | Lectura | Hasta 100 rutas de texto no ocultas |
+| `read ARCHIVO` | Lectura | Máximo 12 KB y rutas restringidas |
+| `report [--json]` | Metadatos | Funciona sin API ni contenido de archivos |
+| `ask PREGUNTA` | Modelo (opcional) | Usa exclusivamente funciones declaradas |
+| `create_note` por `ask` | Escritura | Solo notas nuevas `notes/*.md` con aprobación |
+| `audit-verify` | Local | Comprueba cadena básica SHA-256 |
 
-La herramienta mostrará la nota completa y solo la creará si el operador escribe `APROBAR` en una terminal interactiva. Nunca sobrescribe notas existentes.
+Para permitir solicitudes de notas agrega `--allow-writes` a `ask`. **Incluso así**, una terminal interactiva exige escribir `APROBAR` viendo el texto completo. Ninguna nota existente se sobrescribe.
 
-## Seguridad y límites
+## Web y documentación
 
-Este MVP solo ofrece tres funciones: `list_files`, `read_file`, `create_note`. No ejecuta comandos de shell, no navega por la web, no entrega accesos MCP ni modifica código. Ignora carpetas ocultas y no sigue enlaces simbólicos; **no lo uses como sandbox de seguridad para adversarios o en entornos multiusuario**. No ejecutes el agente sobre carpetas con información confidencial: los textos leídos por la herramienta se envían al servicio de API para responder. Consulta [SECURITY.md](SECURITY.md).
+El sitio estático está en [`docs/index.html`](docs/index.html) y se puede abrir sin servidor. Hay un workflow preparado para desplegarlo mediante GitHub Pages **cuando se configure GitHub Pages como origen GitHub Actions** en Settings → Pages. No afirma ejecutar IA en el navegador y no solicita API keys.
 
-## Relación con OpenBot / CopilotKit
-
-La documentación original de este repositorio exploraba **[OpenBot de CopilotKit](https://github.com/CopilotKit/openbot)**, un proyecto **independiente** desarrollado por sus respectivos mantenedores. **Wrbycker no es el equipo desarrollador de OpenBot, ni está afiliado oficialmente a CopilotKit.** La presentación histórica se conserva sin cambios en `OpenBot - Presentación de Proyecto.pdf`. Este código Python es una implementación educativa original de herramientas supervisadas; **no integra MCP ni AG-UI todavía**.
-
-## Proyecto
-
-- [Arquitectura y limitaciones](docs/ARCHITECTURE.md)
-- [Plan de desarrollo](docs/ROADMAP.md)
+- [Página pública (una vez activada)](https://jperezg93-cloud.github.io/Grupo-de-trabajo-Wrbycker/)
+- [Cómo activar GitHub Pages](docs/DEPLOY.md)
+- [Arquitectura y límites](docs/ARCHITECTURE.md)
+- [Hoja de ruta](docs/ROADMAP.md)
 - [Cómo contribuir](CONTRIBUTING.md)
-- [Política de seguridad](SECURITY.md)
-- [Licencia MIT](LICENSE) (únicamente para los aportes originales de este repositorio; recursos de terceros mantienen sus propias licencias)
+- [Reportar un problema de seguridad](SECURITY.md)
+- [Licencia MIT](LICENSE) — únicamente las aportaciones originales de este repositorio
 
-Proyecto mantenido de forma independiente por **Wrbycker**. Comentarios, issues y pull requests son bienvenidos.
+## Créditos y límites del proyecto
+
+La presentación inicial [OpenBot — Presentación de Proyecto](OpenBot%20-%20Presentaci%C3%B3n%20de%20Proyecto.pdf) estudia **[OpenBot de CopilotKit](https://github.com/CopilotKit/openbot)**, que es un proyecto externo e independiente. Wrbycker **no desarrolla ni mantiene OpenBot oficialmente**. El código de este repositorio es una implementación educativa original y **todavía no incluye MCP ni AG-UI**.
+
+No guardes datos personales, secretos o material confidencial en el workspace de prueba. La política de archivos no constituye un sandbox de seguridad y la cadena SHA-256 de auditoría no está firmada externamente.
+
+Mantenido por **Wrbycker**, desarrollador independiente. Propuestas, issues y aportaciones son bienvenidos.

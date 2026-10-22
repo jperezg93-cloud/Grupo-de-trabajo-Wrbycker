@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#080c19">
+  <meta name="description" content="Wrbycker Agent Lab: proyecto open source en Python para aprender sobre agentes de IA con herramientas limitadas, supervisión humana y reportes gratuitos.">
+  <meta property="og:title" content="Wrbycker Agent Lab — Agentes de IA con control">
+  <meta property="og:description" content="Herramientas abiertas para experimentar con agentes de IA y mantener el control humano.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://jperezg93-cloud.github.io/Grupo-de-trabajo-Wrbycker/">
+  <meta name="color-scheme" content="dark">
+  <title>Wrbycker Agent Lab · Open Source</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="styles.css">
+  <script src="main.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#inicio">Saltar al contenido</a>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="#inicio" aria-label="Wrbycker Agent Lab — Inicio"><span class="brand-mark" aria-hidden="true">W<span>.</span></span><span>WRBYCKER <small>AGENT LAB</small></span></a>
+      <nav class="nav" aria-label="Navegación principal">
+        <a href="#proyecto">Proyecto</a>
+        <a href="#capacidades">Capacidades</a>
+        <a href="#inicio-rapido">Inicio rápido</a>
+        <a href="#seguridad">Seguridad</a>
+      </nav>
+      <a class="nav-github" href="https://github.com/jperezg93-cloud/Grupo-de-trabajo-Wrbycker" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+  <main id="inicio">
+    <section class="hero container" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="pulse" aria-hidden="true"></span> CÓDIGO ABIERTO · PYTHON · v0.2</div>
+        <h1 id="hero-title">Agentes de IA.<br><em>Control humano.</em><br>Sin cajas negras.</h1>
+        <p class="lead">Un laboratorio independiente para explorar agentes de inteligencia artificial con permisos definidos, herramientas limitadas y acciones verificables.</p>
+        <div class="actions">
+          <a class="button primary" href="#inicio-rapido">Empezar gratis <span aria-hidden="true">↘</span></a>
+          <a class="button secondary" href="https://github.com/jperezg93-cloud/Grupo-de-trabajo-Wrbycker" target="_blank" rel="noopener noreferrer">Explorar el código <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="pill-row" aria-label="Detalles del proyecto"><span>Sin dependencias para la CLI</span><span>Python 3.11+</span><span>API opcional</span></div>
+      </div>
+      <div class="hero-visual" aria-label="Panel ilustrativo de las capacidades del agente">
+        <div class="glow"></div>
+        <div class="terminal">
+          <div class="terminal-head"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span><span>wrbycker@agent-lab</span><span class="terminal-status">LOCAL</span></div>
+          <div class="terminal-body">
+            <p><span class="prompt">$</span> python -m wrbycker_agent doctor</p>
+            <p class="line-muted">Wrbycker Agent Lab v0.2.0</p>
+            <p class="line-muted">Modo: lectura por defecto</p>
+            <p class="line-ok">✓ Workspace delimitado</p>
+            <p class="line-ok">✓ Confirmación antes de escribir</p>
+            <p class="line-ok">✓ Auditoría local</p>
+            <p class="blank-line">&nbsp;</p>
+            <p><span class="prompt">$</span> python -m wrbycker_agent report</p>
+            <p class="line-muted">Inventario local · sin llamadas a API</p>
+            <p class="line-highlight">▮</p>
+          </div>
+        </div>
+        <div class="floating-label"><span class="mini-dot" aria-hidden="true"></span> HUMAN IN THE LOOP</div>
+      </div>
+    </section>
+
+    <section class="strip" aria-label="Características principales">
+      <div class="container strip-inner">
+        <span>01 / PERMISOS LIMITADOS</span><span>02 / SIN CLAVE PARA REPORTES</span><span>03 / AUDITORÍA LOCAL</span><span>04 / CÓDIGO ABIERTO</span>
+      </div>
+    </section>
+
+    <section id="proyecto" class="section container">
+      <div class="section-kicker">01 — LA IDEA</div>
+      <div class="split">
+        <div><h2>Más que una respuesta.<br><span class="soft">Un espacio para experimentar.</span></h2></div>
+        <div><p>El proyecto demuestra cómo separar lo que propone un modelo de lo que un programa tiene permiso para hacer. Las funciones reales se ejecutan en Python, en tu equipo, con validaciones propias.</p><p class="small-note">Es un MVP educativo. No promete autonomía ilimitada, certificación de seguridad, integración MCP ni AG-UI.</p></div>
+      </div>
+    </section>
+
+    <section id="capacidades" class="section section-dark">
+      <div class="container">
+        <div class="section-kicker">02 — CAPACIDADES</div>
+        <h2>Hecho para aprender.<br><span class="soft">Diseñado para limitar riesgos.</span></h2>
+        <div class="feature-grid">
+          <article class="feature"><span class="feature-number">01</span><span class="feature-icon" aria-hidden="true">⌘</span><h3>Workspace delimitado</h3><p>Consulta únicamente archivos de texto permitidos; sin comandos del sistema ni acceso indiscriminado al disco.</p></article>
+          <article class="feature"><span class="feature-number">02</span><span class="feature-icon" aria-hidden="true">◇</span><h3>Informe sin API</h3><p>Cuenta archivos, extensiones y tamaños sin leer su contenido ni consumir créditos de OpenAI.</p></article>
+          <article class="feature"><span class="feature-number">03</span><span class="feature-icon" aria-hidden="true">✓</span><h3>Aprobación humana</h3><p>Las notas nuevas exigen una confirmación interactiva y no pueden sobrescribir archivos existentes.</p></article>
+          <article class="feature"><span class="feature-number">04</span><span class="feature-icon" aria-hidden="true">≋</span><h3>Auditoría local</h3><p>Registros básicos enlazados por SHA-256 para detectar alteraciones sencillas del historial.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="inicio-rapido" class="section container">
+      <div class="section-kicker">03 — EMPEZAR</div>
+      <div class="split"><h2>Del repositorio<br><span class="soft">a tu terminal.</span></h2><p>No necesitas registrarte en ningún servicio ni comprar créditos para usar los comandos de inventario. Instala Python 3.11+ y descarga el repositorio.</p></div>
+      <div class="quickstart">
+        <div class="quickstart-top"><div><span class="step-dot">1</span><strong>Selecciona un comando</strong><span class="tiny-note">Copiar y ejecutar en tu equipo</span></div><span class="tag">SIN BACKEND EN ESTA WEB</span></div>
+        <div class="command-tabs" role="group" aria-label="Ejemplos de comandos">
+          <button type="button" class="command-tab active" data-command="setup" aria-pressed="true">Instalación</button>
+          <button type="button" class="command-tab" data-command="report" aria-pressed="false">Informe</button>
+          <button type="button" class="command-tab" data-command="files" aria-pressed="false">Archivos</button>
+          <button type="button" class="command-tab" data-command="tests" aria-pressed="false">Pruebas</button>
+        </div>
+        <div class="code-wrap"><pre id="command-output" aria-live="polite"><code>git clone https://github.com/jperezg93-cloud/Grupo-de-trabajo-Wrbycker.git
+cd Grupo-de-trabajo-Wrbycker
+python -m wrbycker_agent doctor</code></pre><button type="button" class="copy" id="copy-command" aria-label="Copiar comando al portapapeles">Copiar</button></div>
+        <div class="quickstart-footer"><span><span class="mini-dot" aria-hidden="true"></span> Sin datos enviados desde esta página</span><a href="https://github.com/jperezg93-cloud/Grupo-de-trabajo-Wrbycker/blob/main/README.md" target="_blank" rel="noopener noreferrer">Documentación completa ↗</a></div>
+        <p id="copy-feedback" class="sr-only" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section id="seguridad" class="section safety-section">
+      <div class="container safety">
+        <div><div class="section-kicker">04 — TRANSPARENCIA</div><h2>La seguridad empieza<br><span class="soft">por conocer los límites.</span></h2></div>
+        <div class="safety-content">
+          <p>Las medidas de este proyecto son educativas: <strong>no constituyen un sandbox resistente a atacantes.</strong> No proceses contraseñas ni información confidencial en los directorios de prueba.</p>
+          <p>La conexión con OpenAI es opcional y puede enviar el texto de los archivos leídos y generar costos. Este sitio no ejecuta el agente ni solicita claves de API.</p>
+          <a href="https://github.com/jperezg93-cloud/Grupo-de-trabajo-Wrbycker/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer">Leer política de seguridad <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container final-cta">
+      <div class="section-kicker">05 — CÓDIGO ABIERTO</div>
+      <h2>El siguiente experimento<br><em>puede ser el tuyo.</em></h2>
+      <p>Explora el código, abre una incidencia o propone una mejora. Un proyecto independiente hecho para aprender en comunidad.</p>
+      <div class="actions"><a class="button primary" href="https://github.com/jperezg93-cloud/Grupo-de-trabajo-Wrbycker" target="_blank" rel="noopener noreferrer">Explorar en GitHub ↗</a><a class="button secondary" href="https://linktr.ee/wrbycker" target="_blank" rel="noopener noreferrer">Conoce Wrbycker ↗</a></div>
+    </section>
+  </main>
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p><strong>WRBYCKER</strong> / AGENT LAB <span>© <span id="year">2026</span></span></p>
+      <p>Proyecto independiente · Inspirado por el ecosistema abierto de agentes · <a href="https://github.com/CopilotKit/openbot" target="_blank" rel="noopener noreferrer">OpenBot es de CopilotKit ↗</a></p>
+    </div>
+  </footer>
+</body>
+</html>
