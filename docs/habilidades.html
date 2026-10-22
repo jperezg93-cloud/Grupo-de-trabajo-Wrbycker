@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080c19"><meta name="color-scheme" content="dark">
+<meta name="description" content="Habilidades Wrbycker para agentes: instrucciones reutilizables, límites y descarga desde GitHub.">
+<title>Habilidades para agentes · Wrbycker</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg"><link rel="stylesheet" href="guide.css"></head>
+<body>
+<header><nav class="wrap" aria-label="Navegación principal"><a class="brand" href="index.html">W<span>.</span> WRBYCKER</a><div class="nav-links"><a href="index.html">Inicio</a><a href="guia.html">Guía rápida</a><a href="app/">Control Center</a><a href="https://github.com/jperezg93-cloud/Grupo-de-trabajo-Wrbycker">GitHub ↗</a></div></nav></header>
+<main><section class="hero wrap"><div class="eyebrow">WRBYCKER LAB · AGENT SKILLS</div><h1>Una herramienta.<br><em>Una habilidad repetible.</em></h1>
+<p class="lead">Una <strong>Agent Skill</strong> describe cómo debe realizar un agente una tarea: cuándo usarla, qué pasos seguir y cuáles son sus límites. Se distribuye como una carpeta con un archivo <code>SKILL.md</code>.</p>
+<div class="actions"><a class="button primary" href="#primera">Conocer la primera habilidad ↓</a><a class="button secondary" href="guia.html">Volver a la guía ↗</a></div></section>
+<div class="main wrap">
+<section class="section" id="primera"><h2>Primera habilidad de Wrbycker</h2>
+<div class="cards"><article class="card"><div class="number">DISPONIBLE COMO CÓDIGO ABIERTO</div><h3>wrbycker-workspace-report</h3><p>En un entorno que pueda ejecutar Python y acceder al repositorio, guía a un agente para generar un inventario local de archivos permitidos mediante el comando <code>report --json</code>, sin leer su contenido.</p><p><strong>No necesita clave de OpenAI para generar ese informe.</strong></p><div class="actions"><a class="button secondary" href="https://github.com/jperezg93-cloud/Grupo-de-trabajo-Wrbycker/tree/main/skills/wrbycker-workspace-report">Ver la habilidad en GitHub ↗</a></div></article>
+<article class="card"><div class="number">EJEMPLO EN COMPUTADORA</div><h3>¿Qué ejecutaría?</h3><p>Con Python 3.11+ instalado y desde la raíz del repositorio:</p>
+<pre>python -m wrbycker_agent report --json</pre>
+<p>Solo se inspeccionan rutas de texto permitidas y sus metadatos. No es un escaneo de seguridad.</p></article></div></section>
+<div class="callout warning"><strong>Importante:</strong> esta habilidad está publicada para desarrolladores; <strong>no está instalada automáticamente en ChatGPT, Codex ni en los visitantes de esta web</strong>. Para usarla, debes incorporarla a un entorno compatible que tenga acceso autorizado a las herramientas indicadas. La web Control Center no ejecuta este comando Python.</div>
+<section class="section"><h2>¿Cómo se conectarán más adelante?</h2>
+<div class="cards"><article class="card"><div class="number">HOY</div><h3>Interfaz y documentos</h3><p>Control Center ejecuta funciones gratuitas en el navegador. Puedes exportar resultados y consultar el catálogo de habilidades.</p></article>
+<article class="card"><div class="number">SIGUIENTE PASO TÉCNICO</div><h3>Skill + herramienta</h3><p>En Codex u otro entorno compatible, una habilidad puede indicar cómo ejecutar los comandos disponibles del laboratorio Python.</p></article>
+<article class="card"><div class="number">FUTURO, NO IMPLEMENTADO</div><h3>MCP / integración de agentes</h3><p>Un servidor MCP podría exponer herramientas a clientes autorizados, mientras las habilidades describirían flujos de uso. Requiere implementación, permisos y pruebas adicionales.</p></article>
+<article class="card"><div class="number">COMUNIDAD</div><h3>Abierto a sugerencias</h3><p>La biblioteca puede ampliarse con habilidades para organizar proyectos, preparar informes o crear plantillas, siempre indicando qué es funcional y qué es experimental.</p></article></div>
+</section>
+<section class="section"><h2>Aprende sobre el estándar</h2><p>Consulta la documentación oficial de <a href="https://developers.openai.com/api/docs/guides/tools-skills">Agent Skills de OpenAI</a> y el <a href="https://github.com/openai/skills">catálogo público de Skills para Codex</a>. Son referencias externas; Wrbycker no es un producto oficial de OpenAI.</p></section>
+</div></main><footer><div class="wrap">Wrbycker · Habilidades reutilizables · <a href="guia.html">Guía rápida</a> · <a href="index.html">Página principal</a></div></footer>
+</body></html>
