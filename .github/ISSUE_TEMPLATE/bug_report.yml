@@ -1,0 +1,31 @@
+name: "Reporte de error"
+description: "Ayúdanos a reproducir un problema en Wrbycker Agent Lab"
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: "No compartas API keys, credenciales ni datos confidenciales."
+  - type: textarea
+    id: what
+    attributes:
+      label: "Qué ocurrió"
+      description: "Describe el comportamiento observado."
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: "Pasos para reproducir"
+      placeholder: "1. Ejecuto ...\n2. Obtengo ..."
+    validations:
+      required: true
+  - type: input
+    id: python
+    attributes:
+      label: "Versión de Python"
+      placeholder: "3.12"
+  - type: textarea
+    id: expected
+    attributes:
+      label: "Comportamiento esperado"
