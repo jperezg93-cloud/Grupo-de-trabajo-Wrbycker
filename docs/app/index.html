@@ -9,7 +9,9 @@
   <title>Wrbycker Control Center · Panel local</title>
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="app.css">
+  <script src="logic.js" defer></script>
   <script src="app.js" defer></script>
+  <link rel="manifest" href="manifest.webmanifest">
 </head>
 <body>
   <a href="#main" class="skip-link">Saltar al contenido</a>
@@ -21,6 +23,10 @@
         <button type="button" class="nav-link is-active" data-view="overview" aria-current="page"><span aria-hidden="true">▦</span> Resumen</button>
         <button type="button" class="nav-link" data-view="tasks"><span aria-hidden="true">☑</span> Tareas</button>
         <button type="button" class="nav-link" data-view="ideas"><span aria-hidden="true">✦</span> Ideas</button>
+        <button type="button" class="nav-link" data-view="prompts"><span aria-hidden="true">✧</span> Prompt Studio</button>
+        <button type="button" class="nav-link" data-view="characters"><span aria-hidden="true">♙</span> Personajes</button>
+        <button type="button" class="nav-link" data-view="flows"><span aria-hidden="true">⇄</span> Workflows</button>
+        <button type="button" class="nav-link" data-view="workspace"><span aria-hidden="true">▤</span> Archivos</button>
         <button type="button" class="nav-link" data-view="settings"><span aria-hidden="true">⚙</span> Configuración</button>
       </nav>
       <div class="sidebar-footer">
@@ -32,17 +38,22 @@
       <header class="topbar">
         <div><span class="eyebrow">WRBYCKER / APP</span><strong>Tu espacio de trabajo</strong></div>
         <div class="top-actions">
-          <span class="version">VISTA LOCAL · v0.3</span>
+          <span class="version">GRATIS · v1.0</span>
           <a href="../index.html" class="home-link">Sitio público ↗</a>
         </div>
       </header>
       <main id="main" tabindex="-1">
         <section class="view is-visible" id="view-overview" aria-labelledby="overview-title">
-          <div class="view-heading"><div><div class="eyebrow">PANEL GENERAL</div><h1 id="overview-title">Todo comienza aquí<span class="accent">.</span></h1><p>Organiza tu trabajo y conserva tus ideas sin API ni suscripciones adicionales.</p></div><span class="chip">100% LOCAL</span></div>
+          <div class="view-heading"><div><div class="eyebrow">PANEL GENERAL</div><h1 id="overview-title" tabindex="-1">Todo comienza aquí<span class="accent">.</span></h1><p>Organiza tu trabajo y conserva tus ideas sin API ni suscripciones adicionales.</p></div><span class="chip">100% LOCAL</span></div>
           <div class="metrics" aria-label="Métricas de tu espacio">
             <article class="metric"><span>Tareas pendientes</span><strong id="metric-pending">0</strong><small>Por realizar o en curso</small></article>
             <article class="metric"><span>Completadas</span><strong id="metric-done">0</strong><small>Avances registrados</small></article>
             <article class="metric"><span>Ideas guardadas</span><strong id="metric-ideas">0</strong><small>Tu biblioteca personal</small></article>
+          </div>
+          <div class="mini-metrics">
+            <div><span>Plantillas propias</span><strong id="metric-prompts">0</strong><button type="button" data-go="prompts">Abrir Prompt Studio ↗</button></div>
+            <div><span>Personajes creados</span><strong id="metric-characters">0</strong><button type="button" data-go="characters">Abrir fichas ↗</button></div>
+            <div><span>Ejecutar reglas</span><strong>→</strong><button type="button" data-go="flows">Ver workflows ↗</button></div>
           </div>
           <div class="overview-grid">
             <article class="panel wide">
@@ -59,7 +70,7 @@
           <div class="privacy-note"><span aria-hidden="true">◇</span><p><strong>Tu información no sale de esta página.</strong> Este módulo funciona con almacenamiento local del navegador. Exporta una copia JSON desde Configuración para evitar pérdidas de datos.</p></div>
         </section>
         <section class="view" id="view-tasks" aria-labelledby="tasks-title" hidden>
-          <div class="view-heading"><div><div class="eyebrow">ORGANIZACIÓN</div><h1 id="tasks-title">Mis tareas<span class="accent">.</span></h1><p>Define qué quieres terminar y marca tus avances.</p></div></div>
+          <div class="view-heading"><div><div class="eyebrow">ORGANIZACIÓN</div><h1 id="tasks-title" tabindex="-1">Mis tareas<span class="accent">.</span></h1><p>Define qué quieres terminar y marca tus avances.</p></div></div>
           <div class="workspace-grid">
             <form id="task-form" class="panel editor">
               <h2>Nueva tarea</h2>
@@ -84,7 +95,7 @@
           </div>
         </section>
         <section class="view" id="view-ideas" aria-labelledby="ideas-title" hidden>
-          <div class="view-heading"><div><div class="eyebrow">CREATIVIDAD</div><h1 id="ideas-title">Mis ideas<span class="accent">.</span></h1><p>Captura conceptos y propuestas antes de que se pierdan.</p></div></div>
+          <div class="view-heading"><div><div class="eyebrow">CREATIVIDAD</div><h1 id="ideas-title" tabindex="-1">Mis ideas<span class="accent">.</span></h1><p>Captura conceptos y propuestas antes de que se pierdan.</p></div></div>
           <div class="workspace-grid">
             <form id="idea-form" class="panel editor">
               <h2>Guardar una idea</h2>
@@ -102,17 +113,85 @@
             </div>
           </div>
         </section>
+<section class="view" id="view-prompts" aria-labelledby="prompts-title" hidden>
+          <div class="view-heading"><div><div class="eyebrow">CREACIÓN SIN API</div><h1 id="prompts-title" tabindex="-1">Prompt Studio<span class="accent">.</span></h1><p>Crea plantillas, combina variables y copia prompts listos para otras herramientas.</p></div><span class="chip">SIN MODELO EN LA WEB</span></div>
+          <div class="workspace-grid">
+            <form id="prompt-form" class="panel editor">
+              <h2>Editor de prompts</h2><label for="saved-prompts">Plantillas guardadas</label><select id="saved-prompts"><option value="">Nueva plantilla</option></select>
+              <div class="inline-controls"><button id="prompt-new" type="button" class="mini-button">Nueva plantilla</button><button id="prompt-delete" type="button" class="mini-button danger-text">Eliminar guardada</button></div>
+              <label for="prompt-title">Nombre</label><input id="prompt-title" maxlength="120" required placeholder="Ej. Cinemático natural">
+              <label for="prompt-template">Plantilla con variables</label><textarea id="prompt-template" maxlength="5000" required rows="7" placeholder="Retrato de {{nombre}} en estilo {{estilo}}, formato {{formato}}..."></textarea>
+              <p class="hint">Variables disponibles: <code>{{nombre}}</code> <code>{{estilo}}</code> <code>{{formato}}</code> <code>{{objetivo}}</code>.</p>
+              <button type="submit" class="primary-button">Guardar plantilla</button>
+            </form>
+            <div class="panel collection">
+              <div class="panel-head"><div><h2>Vista previa</h2><p id="prompts-counter">0 guardadas</p></div></div>
+              <div class="preset-area"><strong>Plantillas de ejemplo</strong><div id="prompt-presets" class="preset-list"></div></div>
+              <div class="compact-fields">
+                <label for="prompt-var-name">Nombre</label><input id="prompt-var-name" maxlength="160" placeholder="Tu personaje o tema">
+                <label for="prompt-var-style">Estilo</label><input id="prompt-var-style" maxlength="160" placeholder="Natural, cinematográfico...">
+                <label for="prompt-var-format">Formato</label><input id="prompt-var-format" maxlength="160" placeholder="9:16, 16:9, Markdown...">
+                <label for="prompt-var-goal">Objetivo</label><input id="prompt-var-goal" maxlength="160" placeholder="Qué quieres conseguir">
+              </div>
+              <pre class="preview" id="prompt-preview">Selecciona una plantilla o escribe la tuya.</pre>
+              <div class="inline-controls"><button id="prompt-copy" type="button" class="mini-button">Copiar texto</button><button id="prompt-download" type="button" class="mini-button">Descargar .txt</button></div>
+            </div>
+          </div>
+        </section>
+        <section class="view" id="view-characters" aria-labelledby="characters-title" hidden>
+          <div class="view-heading"><div><div class="eyebrow">FICHA MAESTRA</div><h1 id="characters-title" tabindex="-1">Mis personajes<span class="accent">.</span></h1><p>Conserva una identidad narrativa consistente y exporta sus características sin usar API.</p></div></div>
+          <div class="workspace-grid">
+            <form id="character-form" class="panel editor">
+              <div class="panel-head"><h2>Ficha maestra</h2><button id="character-new" type="button" class="mini-button">Nueva ficha</button></div>
+              <label for="character-title">Nombre</label><input id="character-title" maxlength="120" required placeholder="Nombre original del personaje">
+              <label for="character-age">Edad (opcional)</label><input id="character-age" maxlength="40" placeholder="Ej. 29 años">
+              <label for="character-role">Rol u ocupación</label><input id="character-role" maxlength="160" placeholder="Ej. Investigadora">
+              <label for="character-persona">Personalidad</label><textarea id="character-persona" maxlength="3000" rows="4" placeholder="Rasgos, motivaciones, límites, decisiones propias..."></textarea>
+              <label for="character-appearance">Apariencia</label><textarea id="character-appearance" maxlength="3000" rows="4" placeholder="Características físicas constantes..."></textarea>
+              <label for="character-scenario">Premisa y escenario</label><textarea id="character-scenario" maxlength="3000" rows="4" placeholder="Contexto, relaciones y conflicto principal..."></textarea>
+              <button id="character-submit" type="submit" class="primary-button">Guardar personaje</button>
+            </form>
+            <div class="panel collection"><div class="panel-head"><div><h2>Biblioteca de personajes</h2><p id="characters-counter">0 personajes</p></div></div>
+              <p class="hint">Puedes editar y exportar cada ficha en Markdown para adaptarla a otras plataformas. Los textos se guardan solo en este navegador.</p>
+              <ul id="characters-list" class="entry-list"><li class="empty">Todavía no hay personajes.</li></ul>
+            </div>
+          </div>
+        </section>
+        <section class="view" id="view-flows" aria-labelledby="flows-title" hidden>
+          <div class="view-heading"><div><div class="eyebrow">REGLAS LOCALES</div><h1 id="flows-title" tabindex="-1">Workflows<span class="accent">.</span></h1><p>Convierte ideas en tareas, o tareas en ideas, ejecutando reglas manuales sin IA ni servidor.</p></div></div>
+          <div class="workspace-grid">
+            <form id="flow-form" class="panel editor">
+              <h2>Nueva regla</h2>
+              <label for="flow-title">Nombre de la regla</label><input id="flow-title" maxlength="120" required placeholder="Ej. Convertir idea reciente en tarea">
+              <label for="flow-kind">Acción</label><select id="flow-kind"><option value="idea_to_task">Última idea → Nueva tarea</option><option value="task_to_idea">Última tarea → Nueva idea</option></select>
+              <p class="hint">Este editor no ejecuta procesos automáticamente. Tú pulsas «Ejecutar», confirmas y puedes revisar el resultado.</p>
+              <button type="submit" class="primary-button">Guardar regla</button>
+            </form>
+            <div class="panel collection"><div class="panel-head"><div><h2>Flujos disponibles</h2><p id="flows-counter">0 flujos</p></div></div>
+              <ul id="flows-list" class="entry-list"><li class="empty">Todavía no hay flujos.</li></ul>
+            </div>
+          </div>
+        </section>
+        <section class="view" id="view-workspace" aria-labelledby="workspace-title" hidden>
+          <div class="view-heading"><div><div class="eyebrow">HERRAMIENTAS LOCALES</div><h1 id="workspace-title" tabindex="-1">Mis archivos<span class="accent">.</span></h1><p>Obtén un informe básico de un archivo de texto seleccionado. Nunca se envía a un servidor.</p></div></div>
+          <div class="panel upload-panel">
+            <label for="inspect-file">Elegir archivo para analizar (máximo 256 KB)</label>
+            <input id="inspect-file" type="file" accept=".txt,.md,.json,.csv,.js,.py,.html,.css,.yml,.yaml,.toml">
+            <p class="hint">El archivo se analiza solo en la memoria de esta pestaña. No se guarda su contenido en el Control Center.</p>
+            <pre class="preview" id="file-report">Selecciona un archivo de texto para analizarlo localmente.</pre>
+          </div>
+        </section>
         <section class="view" id="view-settings" aria-labelledby="settings-title" hidden>
-          <div class="view-heading"><div><div class="eyebrow">PRIVACIDAD Y DATOS</div><h1 id="settings-title">Configuración<span class="accent">.</span></h1><p>Tú controlas el contenido que guardas en este dispositivo.</p></div></div>
+          <div class="view-heading"><div><div class="eyebrow">PRIVACIDAD Y DATOS</div><h1 id="settings-title" tabindex="-1">Configuración<span class="accent">.</span></h1><p>Tú controlas el contenido que guardas en este dispositivo.</p></div></div>
           <div class="settings-grid">
             <section class="panel"><h2>Crear respaldo</h2><p>Descarga tareas e ideas en un archivo JSON. Guárdalo en un lugar seguro: no sincronizamos información entre dispositivos.</p><button id="export-data" type="button" class="primary-button">Exportar respaldo JSON ↓</button></section>
             <section class="panel"><h2>Restaurar respaldo</h2><p>Selecciona un archivo exportado desde Wrbycker Control Center. Se validará antes de reemplazar los datos actuales.</p><label for="import-data" class="file-label">Seleccionar archivo JSON</label><input id="import-data" type="file" accept=".json,application/json"><small class="micro">Máximo 1 MB. Importar reemplaza los datos locales existentes, previa confirmación.</small></section>
             <section class="panel danger"><h2>Borrar datos de este navegador</h2><p>Elimina permanentemente las tareas e ideas de esta instalación. Exporta un respaldo antes si quieres conservarlas.</p><button id="clear-data" type="button" class="danger-button">Eliminar mis datos locales</button></section>
-            <section class="panel"><h2>Estado del producto</h2><p>Dashboard operativo v0.3. Prompt Studio, personajes y PWA están previstos para etapas posteriores y <strong>no están habilitados todavía</strong>.</p><a class="inline-link" href="../ROADMAP.md">Consultar roadmap ↗</a></section>
+            <section class="panel"><h2>Estado del producto</h2><p>Control Center 1.0: herramientas locales, Prompts, Personajes, Workflows manuales, archivos y respaldo JSON. El agente de IA por API y el servidor MCP son proyectos técnicos separados y <strong>no se ejecutan aquí</strong>.</p><a class="inline-link" href="../ROADMAP.md">Consultar roadmap ↗</a></section>
           </div>
         </section>
       </main>
-      <footer class="footer"><span>WRBYCKER CONTROL CENTER · PROTOTIPO GRATUITO</span><a href="https://github.com/jperezg93-cloud/Grupo-de-trabajo-Wrbycker" target="_blank" rel="noopener noreferrer">Código abierto ↗</a></footer>
+      <footer class="footer"><span>WRBYCKER CONTROL CENTER · GRATUITO · v1.0</span><a href="https://github.com/jperezg93-cloud/Grupo-de-trabajo-Wrbycker" target="_blank" rel="noopener noreferrer">Código abierto ↗</a></footer>
     </div>
   </div>
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
