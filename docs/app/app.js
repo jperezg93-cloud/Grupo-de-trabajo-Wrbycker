@@ -473,8 +473,9 @@
     openView(location.hash.slice(1) || "overview");
     window.addEventListener("hashchange", () => openView(location.hash.slice(1)));
     // Installation is not the same as offline readiness. Show the real status.
-    const status = document.getElementById("offline-status");
-    const updateStatus = (message) => { if (status) status.textContent = message; };
+    const updateStatus = (message) => {
+      for (const element of document.querySelectorAll("[data-offline-status]")) element.textContent = message;
+    };
     if ("serviceWorker" in navigator && location.protocol === "https:") {
       updateStatus("Preparando acceso sin conexión…");
       navigator.serviceWorker.register("./sw.js", { scope: "./" })
