@@ -46,3 +46,22 @@ No afirmaremos que estos dos últimos puntos están verificados antes de hacer l
 La conexión con modelos comerciales de IA, la operación permanente de agentes remotos, una base de datos sincronizada entre dispositivos y una plataforma SaaS con usuarios requieren evaluar servicios/recursos y sus límites. El servidor MCP local y la CLI Python son componentes técnicos distintos, no funciones ejecutables dentro de GitHub Pages.
 
 **GitHub Pages es un alojamiento de archivos estáticos, no un servidor Python.**
+
+
+## Fallo observado y corrección offline (v1.0.1)
+
+**Observación en Android:** con modo avión activo, el icono de la PWA se quedó en la pantalla de inicio. Instalar la aplicación no confirma que los archivos se hayan guardado para funcionar sin conexión.
+
+**Corrección implementada:** ambos destinos de GitHub Pages, `/app/` y `/docs/app/`, ahora incluyen una aplicación completa con su propio service worker. El arranque `index.html` ya no depende de una redirección en el modo de publicación desde la raíz. El worker precarga HTML, CSS, JavaScript y manifest **antes de activarse**, y responde a la navegación con ese HTML cacheado. Se incorporaron pruebas de arranque simulado sin red.
+
+**Cómo probar sin arriesgar datos:**
+
+1. Vuelve a activar Wi‑Fi y abre la app instalada al menos una vez mientras hay conexión.
+2. Entra a **Configuración → Estado del producto** y comprueba el mensaje **«Acceso sin conexión preparado ✓»**. Si no aparece, no continúes con la prueba offline.
+3. En Configuración, exporta un respaldo JSON antes de limpiar datos o reinstalar.
+4. Cierra por completo la app, activa modo avión sin Wi‑Fi y vuelve a abrirla desde su icono.
+5. Comprueba que la tarea de prueba y las demás funciones siguen visibles.
+
+Si el icono sigue mostrando únicamente la pantalla de arranque, abre con conexión la dirección explícita `https://jperezg93-cloud.github.io/Grupo-de-trabajo-Wrbycker/app/index.html`. Evita borrar los datos del sitio o desinstalar sin un respaldo: las notas, tareas y personajes solo están en el almacenamiento local.
+
+Una prueba de Node simula el service worker con red deshabilitada para ambas estructuras de publicación. No reemplaza la aceptación final con un Android real.
