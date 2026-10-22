@@ -34,3 +34,15 @@ pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#091022;border:1px so
 footer{border-top:1px solid var(--line);color:var(--muted);font-size:.8rem;padding:2rem 0}footer a{color:var(--violet)}
 @media(max-width:650px){.hero{padding:3.2rem 0 1.5rem}.cards{grid-template-columns:1fr}.actions{flex-direction:column}.button{width:100%}.card{padding:1.2rem}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+
+/* Branded ecosystem portal, without mixing product and affiliate modules. */
+.skip{position:absolute;top:-4rem;left:1rem;background:var(--mint);color:#07151a;padding:.7rem 1rem;z-index:100;border-radius:7px;text-decoration:none}
+.skip:focus{top:1rem}
+.ecosystem-card{display:flex;flex-direction:column;gap:.6rem}
+.ecosystem-card .actions{margin-top:auto}
+.ecosystem-card .actions .button{flex:1}
+.ecosystem-card h3{font-size:clamp(1.3rem,2.5vw,1.8rem);letter-spacing:-.03em}
+.ecosystem-card p{margin-bottom:.45rem}
+.ecosystem-card strong{color:#d8cdfd}
+@media(max-width:650px){.ecosystem-card .actions{margin-top:.6rem}}
