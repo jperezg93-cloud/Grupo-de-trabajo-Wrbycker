@@ -1,18 +1,26 @@
-# Hoja de ruta
+# Hoja de ruta de Wrbycker Agent Lab
 
-## v0.1 — prototipo educativo
-- [x] Herramientas de lectura sobre carpeta delimitada
-- [x] Creación restringida de notas con aprobación interactiva
-- [x] Auditoría encadenada básica y verificación local
-- [x] Integración opcional con Responses API y tests sin conexión
-- [x] Documentación y CI
+## v0.1 — prototipo educativo (completado)
+- [x] Lectura limitada a archivos dentro de un workspace
+- [x] Creación de notas nuevas bajo aprobación humana
+- [x] Auditoría básica encadenada con SHA-256 y verificación
+- [x] Responses API opcional, con herramientas explícitas
+- [x] Pruebas unitarias sin claves y CI de Python
 
-## Siguientes propuestas (NO implementadas)
-- [ ] Empaquetar herramientas como servidor MCP y añadir pruebas de integración
-- [ ] Políticas configurables por proyecto y permisos por rol
-- [ ] Integrar AG-UI si aporta valor y respeta su especificación
-- [ ] Endurecer acceso a archivos contra ataques de carrera y procesos adversarios
-- [ ] Validar integración de API en un entorno de pruebas con costos limitados
-- [ ] Demo visual y guía de instalación para nuevos desarrolladores
+## v0.2 — información y presentación (completado)
+- [x] Informe de inventario local, gratuito y sin API, con exportación JSON
+- [x] Carpeta de ejemplo de uso
+- [x] Sitio estático adaptable a móviles, sin rastreadores
+- [x] Flujo de publicación para GitHub Pages (requiere activar GitHub Pages en Settings)
+- [x] Plantillas de incidencias y pull requests
+- [x] Nuevas pruebas del informe y sitio estático
 
-Las casillas completadas representan el estado de este repositorio, no características del proyecto upstream OpenBot.
+## Futuro — no implementado
+- [ ] Integración completa con un servidor MCP certificado por pruebas
+- [ ] Configuración avanzada de políticas y presupuestos de tokens
+- [ ] Endurecimiento ante carreras de sistema de archivos (TOCTOU)
+- [ ] Gestión de roles, identidad y auditoría remota
+- [ ] Validación de integración con API real y presupuesto asignado
+- [ ] Soporte opcional AG-UI tras validar su especificación
+
+**No consideres la presencia en esta lista como una función existente hasta verla marcada como completada.** Wrbycker es independiente del proyecto OpenBot de CopilotKit.
