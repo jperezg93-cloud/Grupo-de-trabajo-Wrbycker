@@ -92,7 +92,7 @@ class SiteTests(unittest.TestCase):
                 self.assertIn('lang="es"', html)
                 self.assertIn('name="viewport"', html)
                 self.assertIn('href="guide.css"', html)
-                self.assertNotRegex(html, r'<script[^>]+src=["\\\']https?://')
+                self.assertNotIn('src="https://', html)
                 self.assertIn('href="app/"', html)
         self.assertTrue((DOCS / "guide.css").is_file())
         self.assertIn("Sin registro", home)
