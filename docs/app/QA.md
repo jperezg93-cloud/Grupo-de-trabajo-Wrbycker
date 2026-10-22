@@ -36,10 +36,12 @@ Las pruebas automáticas **no equivalen** a una auditoría de seguridad externa 
 - [x] Iconos PNG 192/512, manifest y caché offline para PWA.
 - [x] Tests de modelos y políticas automatizados.
 - [x] Documentación y enlaces desde sitio público.
-- [ ] Validación manual en el Android real del propietario.
-- [ ] Confirmación de la instalación PWA/offline en ese dispositivo.
+- [x] Validación manual de las funciones principales en el Android del propietario (22 de octubre de 2026).
+- [x] Confirmación de instalación y apertura de la PWA sin conexión en ese dispositivo (22 de octubre de 2026).
 
-No afirmaremos que estos dos últimos puntos están verificados antes de hacer la prueba en el dispositivo.
+**Alcance exacto de la validación manual:** se verificaron mediante capturas reales: creación y persistencia de una tarea pendiente, creación de una idea, plantilla de prompt y exportación .txt, creación y exportación Markdown de una ficha, ejecución manual de Idea → Tarea (aumentó el número de tareas de 1 a 2), importación y restauración de un respaldo JSON, instalación de PWA y apertura con modo avión mostrando datos guardados, y análisis de un archivo .txt (137 bytes, 1 línea, 18 palabras, 134 caracteres). La aplicación indicó «Acceso sin conexión preparado ✓» y «Respaldo restaurado correctamente».
+
+**Cobertura pendiente, no bloqueante para la aceptación funcional principal:** completar tareas y probar todos sus filtros, comprobar búsqueda de ideas, edición de fichas, restauración de respaldos con datos conflictivos, borrado destructivo, pruebas en orientación horizontal y otros dispositivos/navegadores. La aceptación de funciones observadas **no** implica auditoría de seguridad, sincronización entre equipos ni disponibilidad de servicios remotos.
 
 ## Futuro, fuera del presupuesto cero
 
