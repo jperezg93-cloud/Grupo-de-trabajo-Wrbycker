@@ -148,7 +148,7 @@
     const list = $("#tasks-list");
     clear(list);
     let visible = model.tasks.filter((item) => taskFilter === "all" || item.status === taskFilter).slice().reverse();
-    $("#tasks-counter").textContent = model.tasks.length + " tareas";
+    $("#tasks-counter").textContent = D.countLabel(model.tasks.length, "tarea", "tareas");
     if (!visible.length) appendEmpty(list, "Sin tareas en este filtro.");
     const labels = { pending: "Pendiente", doing: "En progreso", done: "Terminada" };
     for (const record of visible) {
@@ -181,7 +181,7 @@
     const list = $("#ideas-list");
     const needle = $("#ideas-search").value.trim().toLocaleLowerCase();
     clear(list);
-    $("#ideas-counter").textContent = model.ideas.length + " ideas";
+    $("#ideas-counter").textContent = D.countLabel(model.ideas.length, "idea", "ideas");
     const visible = model.ideas.filter((x) =>
       (x.title + " " + x.detail).toLocaleLowerCase().includes(needle)).slice().reverse();
     if (!visible.length) appendEmpty(list, "No se encontraron ideas.");
@@ -207,7 +207,7 @@
       saved.append(option);
     }
     saved.value = model.prompts.some((p) => p.id === promptSelection) ? promptSelection : "";
-    $("#prompts-counter").textContent = model.prompts.length + " guardadas";
+    $("#prompts-counter").textContent = D.countLabel(model.prompts.length, "plantilla guardada", "plantillas guardadas");
     const list = $("#prompt-presets");
     clear(list);
     for (const preset of D.DEFAULT_PROMPTS) {
@@ -238,7 +238,7 @@
   function characters() {
     const list = $("#characters-list");
     clear(list);
-    $("#characters-counter").textContent = model.characters.length + " personajes";
+    $("#characters-counter").textContent = D.countLabel(model.characters.length, "personaje", "personajes");
     if (!model.characters.length) appendEmpty(list, "Crea tu primera ficha maestra. Permanece en este navegador.");
     for (const record of model.characters.slice().reverse()) {
       const item = element("li", "entry-card");
@@ -269,7 +269,7 @@
   function workflows() {
     const list = $("#flows-list");
     clear(list);
-    $("#flows-counter").textContent = model.workflows.length + " flujos";
+    $("#flows-counter").textContent = D.countLabel(model.workflows.length, "flujo", "flujos");
     if (!model.workflows.length) appendEmpty(list, "Aún no tienes flujos locales.");
     for (const record of model.workflows.slice().reverse()) {
       const item = element("li", "entry-card");
@@ -483,7 +483,7 @@
         .then(async () => {
           const cacheNames = await caches.keys();
           const here = new URL("./", location.href).pathname.replace(/[^a-z0-9]/gi, "-");
-          const matches = cacheNames.some((name) => name === "wrbycker-control-" + here + "-v3");
+          const matches = cacheNames.some((name) => name === "wrbycker-control-" + here + "-v4");
           updateStatus(matches ? "Acceso sin conexión preparado ✓" :
             "Caché sin conexión pendiente. Abre esta app con internet.");
         })
