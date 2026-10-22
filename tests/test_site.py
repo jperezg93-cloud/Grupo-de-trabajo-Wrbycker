@@ -55,6 +55,26 @@ class SiteTests(unittest.TestCase):
         self.assertIn("SIN BACKEND", self.page)
         self.assertIn("no ejecuta el agente", self.page)
 
+    def test_pages_paths_resolve_in_both_publish_modes(self):
+        # Automatic Pages builds the repo root, while our Actions workflow uploads docs/.
+        # Either artifact must let visitors open the advertised /app/ URL.
+        root = DOCS.parent
+        for path, target in (
+            ("index.html", root / "docs" / "index.html"),
+            ("app/index.html", root / "docs" / "app" / "index.html"),
+        ):
+            with self.subTest(path=path):
+                content = (root / path).read_text(encoding="utf-8")
+                self.assertIn('http-equiv="refresh"', content)
+                self.assertIn("<a href=", content)
+                match = re.search(r'content="0; url=([^"]+)"', content)
+                self.assertIsNotNone(match)
+                resolved = ((root / path).parent / match.group(1) / "index.html").resolve()
+                self.assertEqual(resolved, target.resolve())
+                self.assertTrue(resolved.is_file())
+        self.assertTrue((DOCS / "index.html").is_file())
+        self.assertTrue((DOCS / "app" / "index.html").is_file())
+
     def test_respects_reduced_motion(self):
         css = (DOCS / "styles.css").read_text(encoding="utf-8")
         self.assertIn("prefers-reduced-motion", css)
