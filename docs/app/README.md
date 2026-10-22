@@ -20,6 +20,8 @@ Datos guardados con `localStorage` únicamente en el navegador/dispositivo, no s
 
 La app no ejecuta el código Python ni ofrece MCP, AG-UI, modelos generativos ni tareas automáticas persistentes. Para operaciones de IA mediante API usa separadamente la CLI Python (puede generar cargos).
 
+[Lista de comprobación para Android y criterios de la Etapa 6](QA.md)
+
 ## Desarrollo y pruebas
 
 No hay dependencias npm. Abre `index.html` localmente para probar la interfaz; para probar instalación PWA, usa GitHub Pages o un servidor HTTPS.
