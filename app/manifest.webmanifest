@@ -5,14 +5,20 @@
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#0a1020",
-  "theme_color": "#080d1b",
+  "background_color": "#0b0e19",
+  "theme_color": "#0b0e19",
   "lang": "es",
   "categories": [
     "productivity",
     "utilities"
   ],
   "icons": [
+    {
+      "src": "../docs/brand/wb-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
     {
       "src": "../docs/app/icon-192.png",
       "sizes": "192x192",

@@ -154,7 +154,9 @@ test("both publication modes provide installable manifests and real shell entryp
       const target = path.resolve(root, icon.src);
       assert.ok(fs.existsSync(target), target + " missing");
       const bytes = fs.readFileSync(target);
-      assert.equal(bytes.subarray(1, 4).toString("ascii"), "PNG");
+      if (icon.type === "image/png") assert.equal(bytes.subarray(1, 4).toString("ascii"), "PNG");
+      else if (icon.type === "image/svg+xml") assert.ok(bytes.toString("utf8").startsWith("<svg"));
+      else assert.fail("Unsupported icon MIME: " + icon.type);
     }
   }
 });
@@ -266,8 +268,8 @@ test("offline app updates its cache version so installed browsers receive the ne
     const root = path.join(__dirname, "..", folder);
     const sw = fs.readFileSync(path.join(root, "sw.js"), "utf8");
     const js = fs.readFileSync(path.join(root, "app.js"), "utf8");
-    assert.ok(sw.includes('const CACHE = PREFIX + "v4";'));
-    assert.ok(js.includes('"-v4"'));
+    assert.ok(sw.includes('const CACHE = PREFIX + "v5";'));
+    assert.ok(js.includes('"-v5"'));
   }
 });
 
@@ -286,5 +288,19 @@ test("both app copies call the tested count formatter", () => {
     const src = fs.readFileSync(path.join(__dirname,"..",folder,"app.js"),"utf8");
     for(const type of ["tasks","ideas","prompts","characters","workflows"])
       assert.ok(src.includes("D.countLabel(model."+type+".length"),folder+" "+type);
+  }
+});
+
+test("both PWA manifests include the approved SVG icon and keep PNG fallbacks", () => {
+  for (const folder of ["app","docs/app"]) {
+    const root = path.join(__dirname,"..",folder);
+    const manifest = JSON.parse(fs.readFileSync(path.join(root,"manifest.webmanifest"),"utf8"));
+    assert.equal(manifest.icons[0].type,"image/svg+xml");
+    assert.equal(manifest.icons[0].sizes,"any");
+    assert.ok(manifest.icons[0].src.endsWith("brand/wb-icon.svg"));
+    assert.ok(manifest.icons.some((x) => x.type==="image/png" && x.sizes==="192x192"));
+    assert.ok(manifest.icons.some((x) => x.type==="image/png" && x.sizes==="512x512"));
+    const js = fs.readFileSync(path.join(root,"sw.js"),"utf8");
+    assert.ok(js.includes("wb-icon.svg"));
   }
 });
