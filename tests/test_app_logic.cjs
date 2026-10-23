@@ -154,7 +154,9 @@ test("both publication modes provide installable manifests and real shell entryp
       const target = path.resolve(root, icon.src);
       assert.ok(fs.existsSync(target), target + " missing");
       const bytes = fs.readFileSync(target);
-      assert.equal(bytes.subarray(1, 4).toString("ascii"), "PNG");
+      if (icon.type === "image/png") assert.equal(bytes.subarray(1, 4).toString("ascii"), "PNG");
+      else if (icon.type === "image/svg+xml") assert.ok(bytes.toString("utf8").startsWith("<svg"));
+      else assert.fail("Unsupported icon MIME: " + icon.type);
     }
   }
 });
