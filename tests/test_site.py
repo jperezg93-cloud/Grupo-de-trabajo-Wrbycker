@@ -80,8 +80,25 @@ class SiteTests(unittest.TestCase):
                              (DOCS / "app" / path).read_bytes())
         root_html = (root / "app/index.html").read_text(encoding="utf-8")
         docs_html = (DOCS / "app/index.html").read_text(encoding="utf-8")
-        self.assertEqual(root_html.replace('../docs/favicon.svg',
-                                           '../favicon.svg'), docs_html)
+        self.assertEqual(root_html.replace('../docs/favicon.svg', '../favicon.svg')
+                         .replace('../docs/brand/wb-icon.svg', '../brand/wb-icon.svg'),
+                         docs_html)
+
+    def test_approved_brand_is_shared_by_site_and_app(self):
+        icon = (DOCS / "brand" / "wb-icon.svg").read_text(encoding="utf-8")
+        fav = (DOCS / "favicon.svg").read_text(encoding="utf-8")
+        self.assertEqual(icon, fav)
+        self.assertIn("#7239FC", icon)
+        self.assertIn("#75EBCB", icon)
+        self.assertIn("#FDFDFD", icon)
+        self.assertIn('src="brand/wb-icon.svg"', self.page)
+        for name in ("guia.html", "habilidades.html", "ecosistema.html"):
+            self.assertIn('src="brand/wb-icon.svg"',
+                          (DOCS / name).read_text(encoding="utf-8"))
+        for app in (DOCS.parent / "app", DOCS / "app"):
+            html = (app / "index.html").read_text(encoding="utf-8")
+            self.assertIn('class="brand-symbol"', html)
+            self.assertIn("wb-icon.svg", html)
 
     def test_public_guides_are_linked_and_static(self):
         home = (DOCS / "index.html").read_text(encoding="utf-8")
