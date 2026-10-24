@@ -17,7 +17,7 @@ Los valores se aproximaron a partir de los colores dominantes del kit PNG aproba
 
 - `wb-icon.svg` es un trazado automático **aproximado** a partir del PNG del icono aprobado, destinado a favicon, cabeceras y navegadores compatibles con iconos SVG. No sustituye al archivo maestro de diseño ni a un SVG producido manualmente con trazados verificados.
 - El kit maestro PNG transparente y las versiones horizontal/monocromática aprobadas se conservan como referencia del proyecto de identidad. Esta actualización de web no intenta reconstruir el texto `wrbycker` con otra tipografía.
-- Las PWA mantienen iconos PNG de compatibilidad. Los navegadores compatibles pueden escoger la primera entrada SVG del manifest; otros pueden utilizar los PNG anteriores hasta que los recursos raster se sustituyan. Algunos iconos instalados de Android no se actualizan inmediatamente.
+- Las dos rutas PWA ahora utilizan los iconos PNG oficiales `docs/app/icon-192.png` y `docs/app/icon-512.png`, optimizados a partir del isotipo aprobado. El manifest prioriza los PNG para Android; el SVG sigue como favicon y símbolo de las cabeceras. Algunos iconos ya instalados pueden tardar en actualizarse por la caché del navegador/sistema.
 - Nunca reemplazar `localStorage`, `start_url`, `scope` ni las claves de datos de Control Center al actualizar recursos de marca.
 
 ## Aplicación coherente
@@ -26,3 +26,10 @@ Los valores se aproximaron a partir de los colores dominantes del kit PNG aproba
 - Portada del ecosistema: comparte los colores y dirige a proyectos separados.
 - Enlace de afiliados: se mantiene exclusivamente en Linktree, con sus avisos propios. La identidad visual común **no** significa integrar anuncios o datos de OurDream en la aplicación.
 - Cualquier nueva variante comercial o comunitaria debe usar el mismo isotipo y añadir solo un subtítulo; no alterar el logo madre.
+
+## Publicación Android — versión 6 de caché
+
+- Los PNG de 192 × 192 y 512 × 512 sustituyeron a los iconos provisionales. Sus bordes, tipografía del isotipo y color se derivaron del PNG aprobado por el creador.
+- Ambas versiones de GitHub Pages (`/app/` y `/docs/app/`) conservan sus rutas, `start_url`, `scope` y almacenamiento `localStorage` sin cambios.
+- La caché de recursos estáticos de la PWA cambia de `v5` a `v6`. Nunca borrar los datos del sitio ni desinstalar la aplicación por un cambio de icono. El respaldo JSON es una medida adicional de seguridad.
+- No modifica ni reemplaza el logotipo completo PNG de la identidad, ni incluye afiliados o enlaces externos nuevos.
