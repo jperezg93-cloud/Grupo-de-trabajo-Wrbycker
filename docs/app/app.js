@@ -487,10 +487,10 @@
         const labels = { tasks: "Tareas", ideas: "Ideas", prompts: "Plantillas",
           characters: "Personajes", workflows: "Workflows" };
         const counts = (data) => D.TYPES.map((type) =>
-          labels[type] + ": " + data[type].length).join("\\n");
-        const message = "VISTA PREVIA DEL RESPALDO\\n\\nEn el archivo:\\n" +
-          counts(parsed) + "\\n\\nEn este dispositivo:\\n" + counts(model) +
-          "\\n\\nIMPORTANTE: esta operación reemplazará TODOS los datos locales. " +
+          labels[type] + ": " + data[type].length).join("\n");
+        const message = "VISTA PREVIA DEL RESPALDO\n\nEn el archivo:\n" +
+          counts(parsed) + "\n\nEn este dispositivo:\n" + counts(model) +
+          "\n\nIMPORTANTE: esta operación reemplazará TODOS los datos locales. " +
           "Exporta primero el respaldo actual si quieres conservarlo. ¿Restaurar ahora?";
         if (!window.confirm(message)) return;
         if (commit(parsed, true)) {
