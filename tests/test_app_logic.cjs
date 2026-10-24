@@ -268,8 +268,8 @@ test("offline app updates its cache version so installed browsers receive the ne
     const root = path.join(__dirname, "..", folder);
     const sw = fs.readFileSync(path.join(root, "sw.js"), "utf8");
     const js = fs.readFileSync(path.join(root, "app.js"), "utf8");
-    assert.ok(sw.includes('const CACHE = PREFIX + "v5";'));
-    assert.ok(js.includes('"-v5"'));
+    assert.ok(sw.includes('const CACHE = PREFIX + "v6";'));
+    assert.ok(js.includes('"-v6"'));
   }
 });
 
@@ -291,16 +291,26 @@ test("both app copies call the tested count formatter", () => {
   }
 });
 
-test("both PWA manifests include the approved SVG icon and keep PNG fallbacks", () => {
-  for (const folder of ["app","docs/app"]) {
-    const root = path.join(__dirname,"..",folder);
-    const manifest = JSON.parse(fs.readFileSync(path.join(root,"manifest.webmanifest"),"utf8"));
-    assert.equal(manifest.icons[0].type,"image/svg+xml");
-    assert.equal(manifest.icons[0].sizes,"any");
-    assert.ok(manifest.icons[0].src.endsWith("brand/wb-icon.svg"));
-    assert.ok(manifest.icons.some((x) => x.type==="image/png" && x.sizes==="192x192"));
-    assert.ok(manifest.icons.some((x) => x.type==="image/png" && x.sizes==="512x512"));
-    const js = fs.readFileSync(path.join(root,"sw.js"),"utf8");
-    assert.ok(js.includes("wb-icon.svg"));
+test("both PWA manifests use the approved PNG launcher icons with correct native dimensions", () => {
+  for (const folder of ["app", "docs/app"]) {
+    const root = path.join(__dirname, "..", folder);
+    const manifest = JSON.parse(fs.readFileSync(path.join(root, "manifest.webmanifest"), "utf8"));
+    assert.equal(manifest.icons.length, 2);
+    for (const dimension of [192,512]) {
+      const icon = manifest.icons.find((entry) => entry.sizes === dimension + "x" + dimension);
+      assert.ok(icon, folder + " icon " + dimension);
+      assert.equal(icon.type, "image/png");
+      assert.ok(icon.purpose.includes("maskable"));
+      const buffer = fs.readFileSync(path.resolve(root, icon.src));
+      assert.equal(buffer.subarray(1, 4).toString("ascii"), "PNG");
+      assert.equal(buffer.readUInt32BE(16), dimension);
+      assert.equal(buffer.readUInt32BE(20), dimension);
+    }
+    assert.equal(manifest.start_url, "./index.html");
+    assert.equal(manifest.scope, "./");
+    const sw = fs.readFileSync(path.join(root, "sw.js"), "utf8");
+    assert.ok(sw.includes("icon-192.png"));
+    assert.ok(sw.includes("icon-512.png"));
+    assert.ok(sw.includes("wb-icon.svg"));
   }
 });
