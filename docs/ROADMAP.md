@@ -36,3 +36,14 @@
 - [ ] Soporte opcional AG-UI tras validar su especificación
 
 **No consideres la presencia en esta lista como una función existente hasta verla marcada como completada.** Wrbycker es independiente del proyecto OpenBot de CopilotKit.
+
+## Control Center 1.1 — mejoras gratuitas (implementación web)
+
+- [x] Búsqueda global local de tareas, ideas, plantillas, fichas de personajes y workflows.
+- [x] Vista previa comparativa de cantidades antes de restaurar JSON, con aviso de reemplazo.
+- [x] Enlace de regreso al portafolio general desde Control Center.
+- [x] Actualización del cache offline a v8 para ambas modalidades de GitHub Pages, sin cambiar el almacenamiento.
+- [ ] Aceptación manual de la actualización v1.1 en Android del propietario.
+- [ ] Etiquetas y filtros avanzados (requieren diseño de migración/compatibilidad con JSON v1).
+- [ ] Adaptadores de ficha maestra por plataforma (Cycle, CraveU, Saylo), sin prometer compatibilidad automática con cambios de sus formularios.
+- [ ] Importación con fusión y resolución de conflictos, siempre con exportación previa.
