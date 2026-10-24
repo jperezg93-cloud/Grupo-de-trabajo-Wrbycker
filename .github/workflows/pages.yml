@@ -4,6 +4,7 @@ on:
     branches: [main]
     paths:
       - "docs/**"
+      - "marca.html"
       - ".github/workflows/pages.yml"
   workflow_dispatch:
 
