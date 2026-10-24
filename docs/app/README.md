@@ -39,3 +39,11 @@ Los tests JavaScript se encuentran en `tests/` de la raíz del repositorio.
 ## Arquitectura
 
 `logic.js` concentra validación, modelos de datos, plantillas y reglas y también puede ejecutarse con Node para pruebas. `app.js` solo controla formularios, interfaz y almacenamiento. `sw.js` almacena los recursos estáticos de la aplicación para uso sin conexión, sin ejecutar tareas programadas. `manifest.webmanifest` habilita el modo instalable.
+
+## Novedades de Control Center 1.1 (octubre de 2026)
+
+- **Búsqueda global de solo lectura:** desde el Resumen, busca palabras de tareas, ideas, plantillas, personajes y workflows. Tolera mayúsculas y acentos y permite abrir la sección relacionada.
+- **Vista previa de restauración:** al elegir un respaldo JSON válido muestra la cantidad de registros por módulo en el archivo y en el dispositivo antes de pedir confirmación. **Sigue reemplazando los datos locales**; todavía no fusiona respaldos, así que exporta los datos existentes antes.
+- **Navegación unificada:** acceso directo desde la app al portafolio principal de wrbycker.
+- La caché estática cambia a v8 para actualizar la PWA. Se conservan `localStorage`, el formato JSON de versión 1, el identificador de manifest, las rutas y el alcance de instalación.
+- Esta versión no tiene IA generativa, sincronización, búsqueda remota ni servidor. Todo se ejecuta localmente; no hay rastreo.
