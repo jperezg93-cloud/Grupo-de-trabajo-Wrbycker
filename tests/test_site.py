@@ -84,6 +84,16 @@ class SiteTests(unittest.TestCase):
                          .replace('../docs/brand/wb-icon.svg', '../brand/wb-icon.svg'),
                          docs_html)
 
+    def test_root_brand_link_works_in_both_pages_modes(self):
+        root = DOCS.parent
+        root_entry = (root / "marca.html").read_text(encoding="utf-8")
+        official = (DOCS / "marca.html").read_text(encoding="utf-8")
+        self.assertIn('url=docs/marca.html', root_entry)
+        self.assertIn('href="./docs/marca.html"', root_entry)
+        self.assertIn('href="brand/manual-oficial.md"', official)
+        self.assertIn('href="brand/perfiles.md"', official)
+        self.assertIn('src="app/wb-icon-512-v2.png"', official)
+
     def test_approved_brand_is_shared_by_site_and_app(self):
         icon = (DOCS / "brand" / "wb-icon.svg").read_text(encoding="utf-8")
         fav = (DOCS / "favicon.svg").read_text(encoding="utf-8")
