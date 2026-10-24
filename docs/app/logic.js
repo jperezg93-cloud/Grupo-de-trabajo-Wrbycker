@@ -134,6 +134,38 @@
     return count + " " + (count === 1 ? singular : plural);
   }
 
+  // Read-only, diacritic-insensitive lookup. Does not touch persisted data.
+  function searchRecords(data, query, maxResults = 25) {
+    if (!data || typeof data !== "object" ||
+        typeof query !== "string" || query.length > 120 ||
+        !Number.isSafeInteger(maxResults) || maxResults < 1 || maxResults > 50) return [];
+    const fold = (value) => String(value).normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("es");
+    const needle = fold(query.trim());
+    if (!needle) return [];
+    const fields = {
+      tasks: ["title", "detail"], ideas: ["title", "detail"],
+      prompts: ["title", "template"],
+      characters: ["title", "age", "role", "persona", "appearance", "scenario"],
+      workflows: ["title", "kind"]
+    };
+    const found = [];
+    for (const type of TYPES) {
+      if (!Array.isArray(data[type])) return [];
+      for (const record of data[type].slice().reverse()) {
+        if (!record || !validId(record.id) || typeof record.title !== "string") continue;
+        const values = fields[type].map((field) =>
+          typeof record[field] === "string" ? record[field] : "");
+        if (!values.some((value) => fold(value).includes(needle))) continue;
+        const snippet = values.slice(1).find((value) => fold(value).includes(needle)) ||
+          values[1] || "";
+        found.push({ type, id: record.id, title: record.title, snippet: snippet.slice(0, 160) });
+        if (found.length >= maxResults) return found;
+      }
+    }
+    return found;
+  }
+
   function textFileStats(content, bytes) {
     if (typeof content !== "string" || !Number.isFinite(bytes) || bytes < 0) return null;
     const lines = content ? content.split(/\r\n|\r|\n/).length : 0;
@@ -143,7 +175,7 @@
   const api = Object.freeze({
     VERSION, MAX_ITEMS, MAX_IMPORT_BYTES, TYPES, STATUS, DEFAULT_PROMPTS,
     blank, limitString, validId, validateRecord, validateData, parseBackup,
-    promptFromTemplate, characterToMarkdown, runWorkflow, textFileStats, countLabel
+    promptFromTemplate, characterToMarkdown, runWorkflow, searchRecords, textFileStats, countLabel
   });
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   root.WrbyckerData = api;

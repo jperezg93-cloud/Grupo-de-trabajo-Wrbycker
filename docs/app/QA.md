@@ -67,3 +67,15 @@ La conexión con modelos comerciales de IA, la operación permanente de agentes 
 Si el icono sigue mostrando únicamente la pantalla de arranque, abre con conexión la dirección explícita `https://jperezg93-cloud.github.io/Grupo-de-trabajo-Wrbycker/app/index.html`. Evita borrar los datos del sitio o desinstalar sin un respaldo: las notas, tareas y personajes solo están en el almacenamiento local.
 
 Una prueba de Node simula el service worker con red deshabilitada para ambas estructuras de publicación. No reemplaza la aceptación final con un Android real.
+
+## Pruebas recomendadas de Control Center 1.1 (pendientes de aceptación Android)
+
+1. Antes de actualizar, **exporta el JSON** de datos en Configuración y consérvalo. No borres datos ni desinstales.
+2. Abre la PWA con internet una vez para permitir que se prepare la caché v8. Comprueba «Acceso sin conexión preparado ✓».
+3. Desde Resumen, busca una palabra guardada en alguna tarea, idea, prompt o personaje. Comprueba que aparece una coincidencia y que abre su sección.
+4. Repite una búsqueda con diferente combinación de mayúsculas y acentos.
+5. Si seleccionas un respaldo JSON, verifica que la confirmación muestre **los cinco conteos del archivo y los cinco actuales**. Pulsa **Cancelar** para comprobar que tus datos permanecen intactos. Para probar restauración real, usa una instalación de prueba o un respaldo previamente validado.
+6. Activa modo avión, reinicia la PWA y prueba el buscador sin internet.
+7. Verifica el enlace «Inicio Wrbycker», que abre el portafolio, sin cambiar la instalación de la aplicación.
+
+**La restauración todavía sustituye todo el contenido local**; no fusiona respaldos. Estas pruebas no se marcan como superadas hasta recibir confirmación real desde Android.

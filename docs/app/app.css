@@ -128,3 +128,14 @@ select{cursor:pointer}
 @media(max-width:750px){.shell{display:block}.sidebar{position:static;height:auto;padding:1rem;border-right:0;border-bottom:1px solid var(--border);gap:.85rem}.brand{font-size:.94rem}.side-caption,.sidebar-footer{display:none}.side-nav{display:flex;gap:.4rem;overflow:auto;padding-bottom:.2rem;scrollbar-width:thin}.nav-link{width:auto;min-width:max-content;padding:.55rem .7rem;font-size:.77rem}.nav-link span{font-size:1rem}.topbar{min-height:0;padding:1rem 1.3rem}.topbar .version{display:none}main{padding:1.6rem 1.1rem}.view-heading{align-items:flex-start}.metrics,.mini-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.chip{display:none}.settings-grid{grid-template-columns:1fr}}
 @media(max-width:510px){.view-heading{margin-bottom:1.5rem}.metrics,.mini-metrics{grid-template-columns:1fr;gap:.65rem}.metric{padding:1rem}.metric strong{font-size:2rem}.panel{padding:1.1rem}.entry-heading{flex-direction:column;gap:.3rem}.top-actions{gap:.5rem}.workspace-grid{display:block}.workspace-grid>.panel{margin-bottom:1rem}.footer{padding:1.1rem;font-size:.62rem}.privacy-note{padding:.8rem}.overview-entry{align-items:flex-start;flex-direction:column}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+
+/* Read-only search for records already stored in this browser. */
+.global-search{margin-top:1.3rem}
+.global-search label{display:block;margin:0 0 .5rem}
+#global-search-status{margin:.9rem 0 .55rem}
+.global-results{margin:0;gap:.5rem}
+.global-result-button{width:100%;display:grid;gap:.18rem;text-align:left;padding:.85rem 1rem;border:1px solid #374565;border-radius:9px;background:#121e32;color:var(--text)}
+.global-result-button:hover{border-color:var(--mint);background:#1b2b46}
+.global-result-button strong{font-size:.9rem;overflow-wrap:anywhere}
+.global-result-button span{font-size:.74rem;color:var(--mint)}
+.global-result-button small{color:var(--muted);font-size:.77rem;white-space:normal;overflow-wrap:anywhere}
