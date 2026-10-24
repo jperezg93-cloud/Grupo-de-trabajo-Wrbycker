@@ -268,8 +268,8 @@ test("offline app updates its cache version so installed browsers receive the ne
     const root = path.join(__dirname, "..", folder);
     const sw = fs.readFileSync(path.join(root, "sw.js"), "utf8");
     const js = fs.readFileSync(path.join(root, "app.js"), "utf8");
-    assert.ok(sw.includes('const CACHE = PREFIX + "v6";'));
-    assert.ok(js.includes('"-v6"'));
+    assert.ok(sw.includes('const CACHE = PREFIX + "v7";'));
+    assert.ok(js.includes('"-v7"'));
   }
 });
 
@@ -308,9 +308,13 @@ test("both PWA manifests use the approved PNG launcher icons with correct native
     }
     assert.equal(manifest.start_url, "./index.html");
     assert.equal(manifest.scope, "./");
+    assert.equal(manifest.id, "./");
     const sw = fs.readFileSync(path.join(root, "sw.js"), "utf8");
-    assert.ok(sw.includes("icon-192.png"));
-    assert.ok(sw.includes("icon-512.png"));
+    assert.ok(sw.includes("wb-icon-192-v2.png"));
+    assert.ok(sw.includes("wb-icon-512-v2.png"));
+    for (const icon of manifest.icons) {
+      assert.match(icon.src, /wb-icon-(192|512)-v2\.png$/, "new URL is required for Chrome's icon refresh");
+    }
     assert.ok(sw.includes("wb-icon.svg"));
   }
 });
