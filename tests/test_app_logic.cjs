@@ -268,8 +268,8 @@ test("offline app updates its cache version so installed browsers receive the ne
     const root = path.join(__dirname, "..", folder);
     const sw = fs.readFileSync(path.join(root, "sw.js"), "utf8");
     const js = fs.readFileSync(path.join(root, "app.js"), "utf8");
-    assert.ok(sw.includes('const CACHE = PREFIX + "v7";'));
-    assert.ok(js.includes('"-v7"'));
+    assert.ok(sw.includes('const CACHE = PREFIX + "v8";'));
+    assert.ok(js.includes('"-v8"'));
   }
 });
 
@@ -317,4 +317,52 @@ test("both PWA manifests use the approved PNG launcher icons with correct native
     }
     assert.ok(sw.includes("wb-icon.svg"));
   }
+});
+
+
+test("global search finds tasks, ideas, prompts, characters and flows without altering data", () => {
+  const data = D.blank();
+  data.tasks.push({ ...task("task_search"), title: "Revisar módulo" });
+  data.ideas.push({ ...idea("idea_search"), title: "Fotografía natural" });
+  data.prompts.push({ id: "prompt_search", title: "Foto de estudio", createdAt: now,
+    template: "Ilumina de manera natural a {{nombre}}" });
+  data.characters.push({ id: "char_search", title: "Yori", createdAt: now,
+    age: "29", role: "Asistente", persona: "Serena", appearance: "Ojos azules",
+    scenario: "Oficina" });
+  data.workflows.push(flow("idea_to_task", "flow_search"));
+  const before = JSON.stringify(data);
+  assert.equal(D.searchRecords(data, "FOTOGRAFIA")[0].type, "ideas");
+  assert.equal(D.searchRecords(data, "serena")[0].type, "characters");
+  assert.equal(D.searchRecords(data, "ilumina")[0].type, "prompts");
+  assert.equal(D.searchRecords(data, "módulo")[0].type, "tasks");
+  assert.equal(D.searchRecords(data, "regla")[0].type, "workflows");
+  assert.equal(D.searchRecords(data, "inexistente").length, 0);
+  assert.equal(D.searchRecords(data, "").length, 0);
+  assert.equal(D.searchRecords(data, "x".repeat(121)).length, 0);
+  assert.equal(D.searchRecords(data, "yori", -1).length, 0);
+  assert.equal(JSON.stringify(data), before);
+});
+
+test("global search is bundled in both publication modes without changing stored schema", () => {
+  for (const folder of ["app", "docs/app"]) {
+    const root = path.join(__dirname, "..", folder);
+    const html = fs.readFileSync(path.join(root,"index.html"),"utf8");
+    const js = fs.readFileSync(path.join(root,"app.js"),"utf8");
+    const logic = fs.readFileSync(path.join(root,"logic.js"),"utf8");
+    const css = fs.readFileSync(path.join(root,"app.css"),"utf8");
+    assert.equal((html.match(/id="global-search-input"/g)||[]).length, 1);
+    assert.ok(html.includes('id="global-search-results"'));
+    assert.ok(html.includes('aria-live="polite"'));
+    assert.ok(html.includes('href="../marca.html"'));
+    assert.ok(html.includes("v1.1.0"));
+    assert.ok(js.includes("D.searchRecords(model, query, 25)"));
+    assert.ok(js.includes('$("#global-search-input").addEventListener("input", searchAll)'));
+    assert.ok(js.includes("VISTA PREVIA DEL RESPALDO"));
+    assert.ok(css.includes(".global-result-button"));
+    assert.ok(logic.includes("function searchRecords("));
+    assert.ok(js.includes('"-v8"'));
+    assert.ok(fs.readFileSync(path.join(root,"sw.js"),"utf8").includes('PREFIX + "v8"'));
+  }
+  assert.equal(D.VERSION, 1);
+  assert.deepEqual(D.blank(), {version:1,tasks:[],ideas:[],prompts:[],characters:[],workflows:[]});
 });
