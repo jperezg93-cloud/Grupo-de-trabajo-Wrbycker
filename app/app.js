@@ -1,4 +1,4 @@
-/* Wrbycker Control Center v1.0 — local, dependency-free browser UI. */
+/* Wrbycker Control Center v1.1 — local, dependency-free browser UI. */
 (() => {
   "use strict";
   const D = window.WrbyckerData;
@@ -142,6 +142,38 @@
     }
     $("#metric-prompts").textContent = model.prompts.length;
     $("#metric-characters").textContent = model.characters.length;
+  }
+
+  function searchAll() {
+    const input = $("#global-search-input");
+    const output = $("#global-search-results");
+    const status = $("#global-search-status");
+    const query = input.value.trim();
+    clear(output);
+    if (!query) {
+      status.textContent = "Escribe para buscar en tus registros.";
+      return;
+    }
+    const matches = D.searchRecords(model, query, 25);
+    status.textContent = matches.length
+      ? "Mostrando " + matches.length + " resultado(s) (máximo 25). Toca uno para ir a su sección."
+      : "No se encontraron resultados en tus registros locales.";
+    const labels = { tasks: "Tareas", ideas: "Ideas", prompts: "Prompt Studio",
+      characters: "Personajes", workflows: "Workflows" };
+    const views = { tasks: "tasks", ideas: "ideas", prompts: "prompts",
+      characters: "characters", workflows: "flows" };
+    for (const record of matches) {
+      const li = element("li");
+      const button = element("button", "global-result-button");
+      button.type = "button";
+      button.setAttribute("aria-label", "Abrir " + labels[record.type] + ": " + record.title);
+      button.append(element("span", "", labels[record.type]),
+        element("strong", "", record.title));
+      if (record.snippet) button.append(element("small", "", record.snippet));
+      button.addEventListener("click", () => openView(views[record.type]));
+      li.append(button);
+      output.append(li);
+    }
   }
 
   function tasks() {
@@ -293,7 +325,7 @@
   }
 
   function render() {
-    overview(); tasks(); ideas(); prompts(); characters(); workflows();
+    overview(); tasks(); ideas(); prompts(); characters(); workflows(); searchAll();
   }
 
   function download(name, text, mime, extension) {
@@ -337,6 +369,7 @@
         event.target.reset(); notify("Idea guardada en este dispositivo.");
       }
     });
+    $("#global-search-input").addEventListener("input", searchAll);
     $("#ideas-search").addEventListener("input", ideas);
     for (const btn of $$("[data-task-filter]")) btn.addEventListener("click", () => {
       taskFilter = btn.dataset.taskFilter;
@@ -451,7 +484,15 @@
         if (file.size > D.MAX_IMPORT_BYTES) throw new Error("Archivo demasiado grande");
         const parsed = D.parseBackup(await file.text());
         if (!parsed) throw new Error("Formato de respaldo inválido");
-        if (!window.confirm("¿Reemplazar todos los datos locales por este respaldo? Exporta una copia antes si quieres conservarlos.")) return;
+        const labels = { tasks: "Tareas", ideas: "Ideas", prompts: "Plantillas",
+          characters: "Personajes", workflows: "Workflows" };
+        const counts = (data) => D.TYPES.map((type) =>
+          labels[type] + ": " + data[type].length).join("\\n");
+        const message = "VISTA PREVIA DEL RESPALDO\\n\\nEn el archivo:\\n" +
+          counts(parsed) + "\\n\\nEn este dispositivo:\\n" + counts(model) +
+          "\\n\\nIMPORTANTE: esta operación reemplazará TODOS los datos locales. " +
+          "Exporta primero el respaldo actual si quieres conservarlo. ¿Restaurar ahora?";
+        if (!window.confirm(message)) return;
         if (commit(parsed, true)) {
           promptSelection = null; characterSelection = null;
           $("#character-new").click(); $("#prompt-new").click();
@@ -483,7 +524,7 @@
         .then(async () => {
           const cacheNames = await caches.keys();
           const here = new URL("./", location.href).pathname.replace(/[^a-z0-9]/gi, "-");
-          const matches = cacheNames.some((name) => name === "wrbycker-control-" + here + "-v7");
+          const matches = cacheNames.some((name) => name === "wrbycker-control-" + here + "-v8");
           updateStatus(matches ? "Acceso sin conexión preparado ✓" :
             "Caché sin conexión pendiente. Abre esta app con internet.");
         })
