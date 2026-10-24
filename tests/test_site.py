@@ -136,6 +136,26 @@ class SiteTests(unittest.TestCase):
                 self.assertIn("docs/" + name, entry)
                 self.assertTrue((DOCS / name).is_file())
 
+    def test_official_brand_page_and_editorial_resources(self):
+        brand = (DOCS / "marca.html").read_text(encoding="utf-8")
+        eco = (DOCS / "ecosistema.html").read_text(encoding="utf-8")
+        self.assertIn('href="marca.html"', eco)
+        self.assertIn('lang="es"', brand)
+        self.assertIn('href="brand/manual-oficial.md"', brand)
+        self.assertIn('href="brand/perfiles.md"', brand)
+        self.assertIn('src="app/wb-icon-512-v2.png"', brand)
+        self.assertIn("#7239FC", brand)
+        self.assertIn("#75EBCB", brand)
+        self.assertIn("#FDFDFD", brand)
+        self.assertIn("#0B0E19", brand)
+        self.assertTrue((DOCS / "app/wb-icon-512-v2.png").is_file())
+        self.assertTrue((DOCS / "brand/manual-oficial.md").is_file())
+        bios = (DOCS / "brand/perfiles.md").read_text(encoding="utf-8")
+        for n in (100, 150, 300, 400):
+            self.assertIn("Hasta " + str(n) + " caracteres", bios)
+        self.assertNotIn("ourdreamai.everflowclient.io", brand)
+        self.assertNotIn("<script", brand)
+
     def test_first_skill_has_scoped_instructions(self):
         skill_path = DOCS.parent / "skills" / "wrbycker-workspace-report" / "SKILL.md"
         skill = skill_path.read_text(encoding="utf-8")
