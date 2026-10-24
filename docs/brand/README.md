@@ -33,3 +33,15 @@ Los valores se aproximaron a partir de los colores dominantes del kit PNG aproba
 - Ambas versiones de GitHub Pages (`/app/` y `/docs/app/`) conservan sus rutas, `start_url`, `scope` y almacenamiento `localStorage` sin cambios.
 - La caché de recursos estáticos de la PWA cambia de `v5` a `v6`. Nunca borrar los datos del sitio ni desinstalar la aplicación por un cambio de icono. El respaldo JSON es una medida adicional de seguridad.
 - No modifica ni reemplaza el logotipo completo PNG de la identidad, ni incluye afiliados o enlaces externos nuevos.
+
+## Actualización del icono en Chrome 144 y posteriores — octubre de 2026
+
+Google cambió el mecanismo de actualización de iconos a partir de Chrome 144: modificar el contenido del PNG **sin cambiar su URL** ya no basta para activar la revisión, porque el navegador evita descargar iconos si el listado de rutas del manifest no cambia.
+
+- Se conservaron los PNG originales por compatibilidad y se añadieron **los mismos archivos aprobados** bajo las URL nuevas `wb-icon-192-v2.png` y `wb-icon-512-v2.png`.
+- Se cambió exclusivamente `icons[].src` en ambos manifests y el precaché de recursos estáticos; `id`, `start_url` y `scope` permanecen exactamente iguales.
+- El service worker de ambas rutas utiliza caché `v7`; el contenido local del usuario no se borra, y su respaldo JSON se conserva por precaución.
+- El icono de la aplicación instalada puede requerir que el propietario acepte una propuesta **«Revisar actualización de la aplicación»** desde el menú de Chrome, o que Chrome programe una actualización. No borrar datos de Chrome ni desinstalar la PWA para forzar el icono.
+- Si la app es solo un acceso directo al sitio y no una WebAPK instalada, es posible que el icono del acceso directo no cambie automáticamente.
+
+Fuente técnica oficial: https://developer.chrome.com/blog/improvements-to-web-app-updates (21 de enero de 2026).
