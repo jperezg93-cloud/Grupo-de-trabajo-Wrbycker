@@ -176,6 +176,29 @@ class SiteTests(unittest.TestCase):
         self.assertNotIn("ourdreamai.everflowclient.io", brand)
         self.assertNotIn("<script", brand)
 
+    def test_site_discovery_and_shared_brand_navigation(self):
+        import xml.etree.ElementTree as ET
+        root = DOCS.parent
+        prefix = "https://jperezg93-cloud.github.io/Grupo-de-trabajo-Wrbycker/"
+        for name in ("robots.txt", "sitemap.xml"):
+            self.assertEqual((root / name).read_text(encoding="utf-8"),
+                             (DOCS / name).read_text(encoding="utf-8"))
+        sitemap = ET.fromstring((DOCS / "sitemap.xml").read_text(encoding="utf-8"))
+        locations = {node.text for node in sitemap.iter() if node.tag.endswith("}loc")}
+        expected = {"", "marca.html", "ecosistema.html", "guia.html", "habilidades.html", "app/"}
+        self.assertEqual(locations, {prefix + suffix for suffix in expected})
+        self.assertIn("Sitemap: " + prefix + "sitemap.xml",
+                      (DOCS / "robots.txt").read_text(encoding="utf-8"))
+        for name in ("index.html", "marca.html", "ecosistema.html", "guia.html", "habilidades.html"):
+            page = (DOCS / name).read_text(encoding="utf-8")
+            url = prefix + ("" if name == "index.html" else name)
+            self.assertIn('rel="canonical" href="' + url + '"', page)
+            self.assertIn('property="og:image"', page)
+            self.assertIn('name="twitter:card"', page)
+            self.assertIn('href="marca.html"', page)
+        self.assertIn('href="marca.html">Wrbycker', 
+                      (DOCS / "guia.html").read_text(encoding="utf-8"))
+
     def test_first_skill_has_scoped_instructions(self):
         skill_path = DOCS.parent / "skills" / "wrbycker-workspace-report" / "SKILL.md"
         skill = skill_path.read_text(encoding="utf-8")
