@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://jperezg93-cloud.github.io/Grupo-de-trabajo-Wrbycker/sitemap.xml
