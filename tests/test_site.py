@@ -153,6 +153,8 @@ class SiteTests(unittest.TestCase):
         self.assertIn('lang="es"', brand)
         self.assertIn('id="proyectos"', brand)
         self.assertIn('id="filosofia"', brand)
+        self.assertIn("No porque se haga igual, va a ser igual.", brand)
+        self.assertIn("Wrbycker no busca ser otra página de IA", brand)
         self.assertIn('href="index.html"', brand)
         self.assertIn('href="app/"', brand)
         self.assertIn('href="ecosistema.html"', brand)
