@@ -1,17 +1,17 @@
-# Wrbycker Control Center 1.0
+# Wrbycker Control Center 1.1
 
 Aplicación web estática, instalable como PWA en navegadores compatibles, diseñada para ser **gratuita y local-first**. Se abre desde [Wrbycker Agent Lab](../index.html) y se publica con GitHub Pages en `/app/`.
 
 ## Módulos reales
 
-- **Resumen:** métricas de tareas, ideas, prompts y personajes.
+- **Resumen:** métricas de tareas, ideas, prompts y personajes; búsqueda global local por los cinco módulos.
 - **Tareas:** crear, cambiar estado, filtrar y eliminar.
 - **Ideas:** almacenar, buscar y eliminar ideas.
 - **Prompt Studio:** plantillas libres y tres ejemplos; combinación de variables, copia y exportación de texto.
 - **Personajes:** ficha maestra con personalidad, apariencia, rol y escenario; edición y exportación Markdown.
 - **Workflows:** dos reglas manuales para convertir el último registro de ideas en tarea o viceversa. No hay agente autónomo ni ejecución en segundo plano.
 - **Archivos:** análisis de tamaño, líneas, palabras y vista previa de un archivo de texto de hasta 256 KB, sin subirlo a servidores.
-- **Configuración:** respaldos JSON con validación, restauración con confirmación y borrado local con doble confirmación.
+- **Configuración:** respaldos JSON con validación, vista previa de las cantidades por módulo antes de confirmar su restauración y borrado local con doble confirmación. Restaurar **reemplaza** los datos, no los fusiona.
 - **PWA:** recursos estáticos para uso sin conexión tras una primera visita en línea; requiere HTTPS y navegador compatible.
 
 ## Privacidad y límites
