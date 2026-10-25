@@ -4,7 +4,7 @@
 
 [![Tests](https://github.com/jperezg93-cloud/Grupo-de-trabajo-Wrbycker/actions/workflows/tests.yml/badge.svg)](https://github.com/jperezg93-cloud/Grupo-de-trabajo-Wrbycker/actions/workflows/tests.yml)
 
-**Versiones actuales: Agent Lab CLI v0.2.0 y Control Center web 1.0.** Proyecto independiente en desarrollo; no es producto de seguridad auditado, ni un servidor MCP. Python 3.11+ y librería estándar para ejecución; OpenAI API es opcional.
+**Versiones actuales: Agent Lab CLI v0.2.0 y Control Center web 1.1.0.** Proyecto independiente en desarrollo; no es producto de seguridad auditado, ni un servidor MCP. Python 3.11+ y librería estándar para ejecución; OpenAI API es opcional.
 
 ## Empezar sin gastar créditos API
 
@@ -59,7 +59,7 @@ El modelo predeterminado es `gpt-5-mini`, configurable con `--model`. Las llamad
 
 Para permitir solicitudes de notas agrega `--allow-writes` a `ask`. **Incluso así**, una terminal interactiva exige escribir `APROBAR` viendo el texto completo. Ninguna nota existente se sobrescribe.
 
-## Wrbycker Control Center 1.0 (gratuito)
+## Wrbycker Control Center 1.1 (gratuito)
 
 La aplicación web estática vive en [`docs/app/`](docs/app/README.md). Permite organizar tareas e ideas, construir prompts, mantener fichas maestras de personajes, ejecutar reglas manuales, analizar archivos de texto del usuario y exportar/restaurar respaldos JSON. Funciona con almacenamiento **local del navegador**, sin cuenta, sin backend y sin consumo de API. Se puede instalar como PWA en navegadores compatibles; para usarla sin internet debes visitarla en línea al menos una vez.
 
