@@ -1,8 +1,8 @@
-# Wrbycker Control Center — verificación de versión 1.0
+# Wrbycker Control Center — verificación de versiones 1.0 y 1.1
 
 ## Alcance gratuito
 
-La versión 1.0 es una aplicación web estática en `/app/`. Incluye ocho áreas operativas: resumen, tareas, ideas, Prompt Studio, personajes, workflows manuales, archivos y configuración. **No incorpora IA en la web** ni requiere dominio propio, servidor, API key, cuenta nueva o suscripción.
+La versión 1.0 fue la base verificada en Android. La versión 1.1 añade búsqueda global y vista previa comparativa de respaldos. Es una aplicación web estática en `/app/`. Incluye ocho áreas operativas: resumen, tareas, ideas, Prompt Studio, personajes, workflows manuales, archivos y configuración. **No incorpora IA en la web** ni requiere dominio propio, servidor, API key, cuenta nueva o suscripción.
 
 Los datos viven en `localStorage` del navegador de ese dispositivo. No se sincronizan automáticamente. Si se borran los datos del sitio o se cambia de navegador, pueden perderse; existe exportación e importación JSON validada para respaldos.
 
