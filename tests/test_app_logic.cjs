@@ -268,8 +268,8 @@ test("offline app updates its cache version so installed browsers receive the ne
     const root = path.join(__dirname, "..", folder);
     const sw = fs.readFileSync(path.join(root, "sw.js"), "utf8");
     const js = fs.readFileSync(path.join(root, "app.js"), "utf8");
-    assert.ok(sw.includes('const CACHE = PREFIX + "v9";'));
-    assert.ok(js.includes('"-v9"'));
+    assert.ok(sw.includes('const CACHE = PREFIX + "v10";'));
+    assert.ok(js.includes('"-v10"'));
   }
 });
 
@@ -360,8 +360,8 @@ test("global search is bundled in both publication modes without changing stored
     assert.ok(js.includes("VISTA PREVIA DEL RESPALDO"));
     assert.ok(css.includes(".global-result-button"));
     assert.ok(logic.includes("function searchRecords("));
-    assert.ok(js.includes('"-v9"'));
-    assert.ok(fs.readFileSync(path.join(root,"sw.js"),"utf8").includes('PREFIX + "v9"'));
+    assert.ok(js.includes('"-v10"'));
+    assert.ok(fs.readFileSync(path.join(root,"sw.js"),"utf8").includes('PREFIX + "v10"'));
   }
   assert.equal(D.VERSION, 1);
   assert.deepEqual(D.blank(), {version:1,tasks:[],ideas:[],prompts:[],characters:[],workflows:[]});
@@ -388,9 +388,20 @@ test("v1.2 mobile Creative Workspace uses existing modules and preserved local d
     assert.ok(js.includes('$("#bento-pending").textContent'));
     assert.ok(js.includes('$("#dock-more").addEventListener'));
     assert.ok(js.includes('"wrbycker.control-center.v1"'));
-    assert.ok(sw.includes('PREFIX + "v9"'));
+    assert.ok(sw.includes('PREFIX + "v10"'));
   }
   const data = D.blank();
   data.tasks.push(task());
   assert.deepEqual(D.parseBackup(JSON.stringify(data)), data);
+});
+
+test("PWA navigations check for fresh HTML when online before cached fallback", () => {
+  for (const folder of ["app","docs/app"]) {
+    const sw = fs.readFileSync(path.join(__dirname,"..",folder,"sw.js"),"utf8");
+    const onlineStart = sw.indexOf("const fresh = await fetch(request)");
+    const fallback = sw.indexOf('const shell = await cache.match(asset("index.html"))');
+    assert.ok(onlineStart > 0 && fallback > onlineStart);
+    assert.ok(sw.includes('await cache.put(asset("index.html"), fresh.clone())'));
+    assert.ok(sw.includes("if (shell) return shell"));
+  }
 });

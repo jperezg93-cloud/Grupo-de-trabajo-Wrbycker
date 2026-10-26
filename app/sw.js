@@ -1,11 +1,11 @@
-/* Offline app shell v9. Scoped to this installed PWA location.
+/* Offline app shell v10. Scoped to this installed PWA location.
  * Never cache personal content; only static files checked into the repository.
  */
 "use strict";
 const SCOPE = self.registration.scope;
 const SCOPE_KEY = new URL(SCOPE).pathname.replace(/[^a-z0-9]/gi, "-");
 const PREFIX = "wrbycker-control-" + SCOPE_KEY + "-";
-const CACHE = PREFIX + "v9";
+const CACHE = PREFIX + "v10";
 const CORE = ["index.html", "app.css", "logic.js", "app.js", "manifest.webmanifest"];
 const OPTIONAL = ["../docs/brand/wb-icon.svg", "../docs/app/wb-icon-192-v2.png", "../docs/app/wb-icon-512-v2.png", "../docs/favicon.svg"];
 const asset = (name) => new URL(name, SCOPE).href;
@@ -41,9 +41,15 @@ self.addEventListener("fetch", (event) => {
 
   if (request.mode === "navigate") {
     event.respondWith((async () => {
-      // A navigation to either /app/ or /app/index.html never needs a redirect
-      // or a network roundtrip after successful service-worker installation.
+      // Prefer fresh app HTML online; preserve the cached shell for offline use.
       const cache = await caches.open(CACHE);
+      try {
+        const fresh = await fetch(request);
+        if (fresh.ok && fresh.type === "basic") {
+          await cache.put(asset("index.html"), fresh.clone()).catch(() => {});
+          return fresh;
+        }
+      } catch (_) { /* Offline: fall back to the saved app shell. */ }
       const shell = await cache.match(asset("index.html"));
       if (shell) return shell;
       return fetch(request);
