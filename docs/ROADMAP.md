@@ -47,3 +47,9 @@
 - [ ] Etiquetas y filtros avanzados (requieren diseño de migración/compatibilidad con JSON v1).
 - [ ] Adaptadores de ficha maestra por plataforma (Cycle, CraveU, Saylo), sin prometer compatibilidad automática con cambios de sus formularios.
 - [ ] Importación con fusión y resolución de conflictos, siempre con exportación previa.
+
+## Control Center 1.2 — experiencia móvil
+- [x] Inicio Bento y protagonista visual creativo con contenido real del almacenamiento.
+- [x] Navegación inferior en móvil y acceso a los ocho módulos.
+- [x] Documentación UX Core y caché offline v9 en ambas rutas.
+- [ ] Prueba visual y funcional en Android del propietario, incluida apertura sin conexión.
