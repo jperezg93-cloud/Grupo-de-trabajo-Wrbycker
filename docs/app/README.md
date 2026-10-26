@@ -1,4 +1,4 @@
-# Wrbycker Control Center 1.1
+# Wrbycker Control Center 1.2
 
 Aplicación web estática, instalable como PWA en navegadores compatibles, diseñada para ser **gratuita y local-first**. Se abre desde [Wrbycker Agent Lab](../index.html) y se publica con GitHub Pages en `/app/`.
 
@@ -47,3 +47,7 @@ Los tests JavaScript se encuentran en `tests/` de la raíz del repositorio.
 - **Navegación unificada:** acceso directo desde la app al portafolio principal de wrbycker.
 - La caché estática cambia a v8 para actualizar la PWA. Se conservan `localStorage`, el formato JSON de versión 1, el identificador de manifest, las rutas y el alcance de instalación.
 - Esta versión no tiene IA generativa, sincronización, búsqueda remota ni servidor. Todo se ejecuta localmente; no hay rastreo.
+
+## Nueva navegación móvil 1.2
+
+Inicio creativo con tarjeta protagonista, Bento de tareas/personajes/Prompt Studio y barra inferior para Inicio, Tareas, Ideas, Personajes y «Más» (los cuatro módulos restantes). Los contadores usan los registros locales. [Reglas de UX](UX_CORE.md). La PWA usa caché v9; no borrar datos ni reinstalar para actualizar.
