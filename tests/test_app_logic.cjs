@@ -268,8 +268,8 @@ test("offline app updates its cache version so installed browsers receive the ne
     const root = path.join(__dirname, "..", folder);
     const sw = fs.readFileSync(path.join(root, "sw.js"), "utf8");
     const js = fs.readFileSync(path.join(root, "app.js"), "utf8");
-    assert.ok(sw.includes('const CACHE = PREFIX + "v8";'));
-    assert.ok(js.includes('"-v8"'));
+    assert.ok(sw.includes('const CACHE = PREFIX + "v9";'));
+    assert.ok(js.includes('"-v9"'));
   }
 });
 
@@ -354,15 +354,43 @@ test("global search is bundled in both publication modes without changing stored
     assert.ok(html.includes('id="global-search-results"'));
     assert.ok(html.includes('aria-live="polite"'));
     assert.ok(html.includes('href="../marca.html"'));
-    assert.ok(html.includes("v1.1.0"));
+    assert.ok(html.includes("v1.2.0"));
     assert.ok(js.includes("D.searchRecords(model, query, 25)"));
     assert.ok(js.includes('$("#global-search-input").addEventListener("input", searchAll)'));
     assert.ok(js.includes("VISTA PREVIA DEL RESPALDO"));
     assert.ok(css.includes(".global-result-button"));
     assert.ok(logic.includes("function searchRecords("));
-    assert.ok(js.includes('"-v8"'));
-    assert.ok(fs.readFileSync(path.join(root,"sw.js"),"utf8").includes('PREFIX + "v8"'));
+    assert.ok(js.includes('"-v9"'));
+    assert.ok(fs.readFileSync(path.join(root,"sw.js"),"utf8").includes('PREFIX + "v9"'));
   }
   assert.equal(D.VERSION, 1);
   assert.deepEqual(D.blank(), {version:1,tasks:[],ideas:[],prompts:[],characters:[],workflows:[]});
+});
+
+test("v1.2 mobile Creative Workspace uses existing modules and preserved local data format", () => {
+  for (const folder of ["app", "docs/app"]) {
+    const root = path.join(__dirname, "..", folder);
+    const html = fs.readFileSync(path.join(root, "index.html"), "utf8");
+    const css = fs.readFileSync(path.join(root, "app.css"), "utf8");
+    const js = fs.readFileSync(path.join(root, "app.js"), "utf8");
+    const sw = fs.readFileSync(path.join(root, "sw.js"), "utf8");
+    assert.ok(html.includes('class="creative-hero"'));
+    assert.ok(html.includes('id="bento-pending"'));
+    assert.ok(html.includes('id="bento-characters"'));
+    assert.ok(html.includes('class="mobile-dock"'));
+    assert.ok(html.includes('id="dock-more-menu"'));
+    assert.ok(html.includes('data-view="settings"'));
+    for (const view of ["overview","tasks","ideas","prompts","characters","flows","workspace","settings"]) {
+      assert.ok(html.includes('id="view-' + view + '"'));
+    }
+    assert.ok(css.includes('env(safe-area-inset-bottom'));
+    assert.ok(css.includes('prefers-reduced-motion'));
+    assert.ok(js.includes('$("#bento-pending").textContent'));
+    assert.ok(js.includes('$("#dock-more").addEventListener'));
+    assert.ok(js.includes('"wrbycker.control-center.v1"'));
+    assert.ok(sw.includes('PREFIX + "v9"'));
+  }
+  const data = D.blank();
+  data.tasks.push(task());
+  assert.deepEqual(D.parseBackup(JSON.stringify(data)), data);
 });
