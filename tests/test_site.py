@@ -203,11 +203,11 @@ class SiteTests(unittest.TestCase):
 
     def test_visible_control_center_version_is_consistent(self):
         landing = (DOCS / "index.html").read_text(encoding="utf-8")
-        self.assertIn("CONTROL CENTER 1.1", landing)
+        self.assertIn("CONTROL CENTER 1.2", landing)
         for path in (DOCS / "app/index.html", DOCS.parent / "app/index.html"):
             html = path.read_text(encoding="utf-8")
             self.assertIn("Control Center 1.1: herramientas locales", html)
-            self.assertIn("v1.1.0", html)
+            self.assertIn("v1.2.0", html)
 
     def test_first_skill_has_scoped_instructions(self):
         skill_path = DOCS.parent / "skills" / "wrbycker-workspace-report" / "SKILL.md"
