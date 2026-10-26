@@ -1,4 +1,4 @@
-/* Wrbycker Control Center v1.1 — local, dependency-free browser UI. */
+/* Wrbycker Control Center v1.2 — local, dependency-free browser UI. */
 (() => {
   "use strict";
   const D = window.WrbyckerData;
@@ -113,6 +113,10 @@
       if (active) nav.setAttribute("aria-current", "page");
       else nav.removeAttribute("aria-current");
     }
+    const moreMenu = $("#dock-more-menu");
+    if (moreMenu) moreMenu.hidden = true;
+    const moreButton = $("#dock-more");
+    if (moreButton) moreButton.setAttribute("aria-expanded", "false");
     history.replaceState(null, "", "#" + view);
     const title = $("#view-" + view + " h1");
     if (title) title.focus({ preventScroll: true });
@@ -142,6 +146,8 @@
     }
     $("#metric-prompts").textContent = model.prompts.length;
     $("#metric-characters").textContent = model.characters.length;
+    $("#bento-pending").textContent = model.tasks.filter((x) => x.status !== "done").length;
+    $("#bento-characters").textContent = model.characters.length;
   }
 
   function searchAll() {
@@ -350,7 +356,19 @@
 
   function wireEvents() {
     for (const btn of $$("[data-view]")) btn.addEventListener("click", () => openView(btn.dataset.view));
-    for (const btn of $$("[data-go]")) btn.addEventListener("click", () => openView(btn.dataset.go));
+    for (const btn of $("[data-go]")) btn.addEventListener("click", () => openView(btn.dataset.go));
+    $("#dock-more").addEventListener("click", () => {
+      const menu = $("#dock-more-menu");
+      menu.hidden = !menu.hidden;
+      $("#dock-more").setAttribute("aria-expanded", String(!menu.hidden));
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !$("#dock-more-menu").hidden) {
+        $("#dock-more-menu").hidden = true;
+        $("#dock-more").setAttribute("aria-expanded", "false");
+        $("#dock-more").focus();
+      }
+    });
     $("#task-form").addEventListener("submit", (event) => {
       event.preventDefault();
       const title = $("#task-title").value.trim();
@@ -524,7 +542,7 @@
         .then(async () => {
           const cacheNames = await caches.keys();
           const here = new URL("./", location.href).pathname.replace(/[^a-z0-9]/gi, "-");
-          const matches = cacheNames.some((name) => name === "wrbycker-control-" + here + "-v8");
+          const matches = cacheNames.some((name) => name === "wrbycker-control-" + here + "-v9");
           updateStatus(matches ? "Acceso sin conexión preparado ✓" :
             "Caché sin conexión pendiente. Abre esta app con internet.");
         })
