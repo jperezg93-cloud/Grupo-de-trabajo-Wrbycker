@@ -206,7 +206,7 @@ class SiteTests(unittest.TestCase):
         self.assertIn("CONTROL CENTER 1.2", landing)
         for path in (DOCS / "app/index.html", DOCS.parent / "app/index.html"):
             html = path.read_text(encoding="utf-8")
-            self.assertIn("Control Center 1.1: herramientas locales", html)
+            self.assertIn("Control Center 1.2: herramientas locales", html)
             self.assertIn("v1.2.0", html)
 
     def test_first_skill_has_scoped_instructions(self):
