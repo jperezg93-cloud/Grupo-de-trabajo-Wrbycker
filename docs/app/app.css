@@ -139,3 +139,48 @@ select{cursor:pointer}
 .global-result-button strong{font-size:.9rem;overflow-wrap:anywhere}
 .global-result-button span{font-size:.74rem;color:var(--mint)}
 .global-result-button small{color:var(--muted);font-size:.77rem;white-space:normal;overflow-wrap:anywhere}
+
+
+/* Wrbycker UX Core 1.2: quiet surfaces, functional accent and reachable controls. */
+.creative-hero{margin:0 0 1rem;background:#a989ff;color:#141020;border-radius:30px;padding:clamp(1.3rem,4vw,2.3rem);min-height:255px;display:flex;flex-direction:column;align-items:flex-start;gap:.9rem}
+.creative-hero-top{display:flex;justify-content:space-between;align-items:center;align-self:stretch;font-size:.69rem;font-weight:850;letter-spacing:.09em}
+.creative-hero h2{font-size:clamp(1.85rem,4vw,3.2rem);line-height:1.07;max-width:19ch;letter-spacing:-.045em;margin:.3rem 0 0}
+.creative-hero p{max-width:42ch;margin:0;font-size:.91rem;color:#251b3b}
+.creative-hero-action{min-height:46px;margin-top:auto;background:#171222;color:#fff;border:0;border-radius:16px;font-weight:750;padding:.7rem 1.1rem;display:flex;gap:1rem;align-items:center;justify-content:space-between}
+.creative-hero-action:hover{background:#302245}
+.bento-entry{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem;margin:0 0 1.5rem}
+.bento-tile{border:1px solid #33343d;border-radius:26px;padding:1.2rem;min-height:145px;background:#202025;color:#f7f5ff;text-align:left;display:flex;flex-direction:column;align-items:flex-start;gap:.5rem}
+.bento-tile:hover{border-color:#a989ff}
+.bento-tile>span:first-child{font-size:1.45rem;line-height:1;color:#75ebcb}
+.bento-tile strong{font-size:2rem;line-height:1.1}
+.bento-tile small{font-size:.78rem;color:#c7c4d0}
+.bento-tile-character{background:#19191f}.bento-tile-character>span:first-child{color:#cdb6ff}
+.bento-tile-wide{grid-column:1/-1;min-height:84px;flex-direction:row;justify-content:space-between;align-items:center}
+.bento-tile-wide span:first-child{display:grid;gap:.35rem}.bento-tile-wide strong{font-size:1rem}.bento-tile-wide>span:last-child{color:#75ebcb}
+.mobile-dock,.dock-more-menu{display:none}
+@media(max-width:750px){
+  :root{--bg:#090a10;--sidebar:#0d0e15;--surface:#1d1d23;--surface2:#25252d;--border:#30313a}
+  body{background:#090a10}
+  .shell{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+  .sidebar{background:#090a10;border-bottom:1px solid #262630}
+  .side-nav{display:none}
+  .topbar{background:#090a10;border-bottom-color:#272832}
+  .metric,.panel,.mini-metrics>div{background:#1b1c24;border-color:#34343e;border-radius:24px}
+  .view-heading{margin-bottom:1.3rem}
+  .view-heading h1{font-size:clamp(1.75rem,7vw,2.6rem)}
+  .metrics{grid-template-columns:repeat(3,minmax(0,1fr));gap:.55rem}
+  .metric{padding:.85rem;min-width:0;gap:.3rem}
+  .metric span{font-size:.72rem}.metric strong{font-size:1.65rem}.metric small{font-size:.64rem}
+  .mini-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem}
+  .mobile-dock{position:fixed;z-index:95;left:12px;right:12px;bottom:calc(8px + env(safe-area-inset-bottom,0px));display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:2px;background:#18191f;border:1px solid #353640;border-radius:24px;padding:7px;box-shadow:0 12px 40px #0009}
+  .dock-link{background:transparent;color:#c5c5ce;border:0;border-radius:17px;min-width:0;min-height:54px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2px}
+  .dock-link span{font-size:1.25rem;line-height:1.2}.dock-link small{font-size:.64rem}
+  .dock-link.is-active{background:#a989ff;color:#140d24;font-weight:850}
+  .dock-more-menu:not([hidden]){position:fixed;z-index:94;bottom:calc(93px + env(safe-area-inset-bottom,0px));right:12px;left:12px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;background:#202028;border:1px solid #41414c;border-radius:22px;padding:12px;box-shadow:0 10px 30px #000a}
+  .dock-more-menu button{min-height:48px;padding:.7rem;color:#f7f6fc;background:#30303b;border:1px solid #484854;border-radius:13px;text-align:center;font-weight:700}
+  .toast{bottom:calc(100px + env(safe-area-inset-bottom,0px))}
+  .bento-tile{min-height:148px}
+}
+@media(max-width:510px){.metrics{grid-template-columns:repeat(3,minmax(0,1fr));gap:.45rem}.metric{padding:.7rem}.metric strong{font-size:1.5rem}.mini-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:360px){.dock-link small{font-size:.56rem}.dock-link{min-height:52px}.metric span{font-size:.65rem}}
+@media(min-width:751px){.creative-hero{min-height:230px}.bento-entry{grid-template-columns:1fr 1fr 1.5fr}.bento-tile-wide{grid-column:auto;min-height:145px}}
