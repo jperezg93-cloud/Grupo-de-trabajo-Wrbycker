@@ -1,7 +1,7 @@
 {
   "name": "Wrbycker Control Center",
   "short_name": "Wrbycker",
-  "description": "Panel gratuito de herramientas creativas y organización que guarda tus datos en este dispositivo.",
+  "description": "Centro de control local para organizar tareas, ideas, prompts, personajes y workflows sin enviar tus datos a un servidor.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
