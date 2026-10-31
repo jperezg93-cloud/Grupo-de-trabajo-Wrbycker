@@ -274,3 +274,16 @@ select{cursor:pointer}
   .dock-more-menu button{border:0;border-radius:20px;background:#33353f}
   .footer{border:0;padding-bottom:6rem}
 }
+
+@media(max-width:750px){
+  #view-overview>.view-heading{
+    position:absolute!important;
+    inline-size:1px!important;
+    block-size:1px!important;
+    overflow:hidden!important;
+    clip-path:inset(50%)!important;
+    white-space:nowrap!important;
+  }
+  #view-overview{padding-top:.15rem}
+  #view-overview>.creative-hero{margin-top:0}
+}
