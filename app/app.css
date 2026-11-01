@@ -287,3 +287,74 @@ select{cursor:pointer}
   #view-overview{padding-top:.15rem}
   #view-overview>.creative-hero{margin-top:0}
 }
+
+
+/* Material 3 internal modules — Android-first consistency */
+@media(max-width:750px){
+  .workspace-grid{display:block}
+  .workspace-grid>.panel{margin-bottom:.9rem}
+  .panel{padding:1.15rem}
+  .editor,.collection{background:#1b1d25}
+  .panel-head{margin-bottom:1.05rem}
+  .panel-head h2{font-size:1.08rem}
+  .panel-head p{font-size:.8rem;line-height:1.45}
+  label{font-size:.78rem;color:#d7d2e3}
+  input,select,textarea{
+    min-height:52px;
+    border-radius:18px;
+    background:#23252e;
+    color:#f4f0fb;
+    box-shadow:inset 0 0 0 1px transparent;
+  }
+  textarea{min-height:132px}
+  input:focus,select:focus,textarea:focus{
+    outline:none;
+    box-shadow:inset 0 0 0 2px #c8b6ff;
+  }
+  .primary-button{
+    min-height:52px;
+    border-radius:26px;
+    background:#c8b6ff;
+    color:#211936;
+    font-weight:800;
+  }
+  .filter-row{gap:.45rem;overflow-x:auto;flex-wrap:nowrap;padding-bottom:.2rem}
+  .filter{
+    min-height:40px;
+    padding:.55rem .85rem;
+    background:#272933;
+    color:#cbc7d5;
+    white-space:nowrap;
+  }
+  .filter.is-selected{
+    background:#352b52;
+    color:#eee7ff;
+  }
+  .entry-list{gap:.65rem}
+  .entry-card{
+    border-radius:24px;
+    padding:1rem;
+    background:#20222b;
+  }
+  .entry-actions{gap:.45rem}
+  .mini-button,.ghost-button,.file-label{
+    min-height:40px;
+    padding:.55rem .85rem;
+    background:#2b2d37;
+    color:#e9e4f2;
+  }
+  .danger-text{background:#3b252b;color:#ffdadf}
+  .small-select{min-height:40px;max-width:none}
+  .preview{
+    border:0;
+    border-radius:22px;
+    background:#14161d;
+    color:#9ce8cf;
+    padding:1rem;
+  }
+  .settings-grid{display:block}
+  .settings-grid>.panel{margin-bottom:.9rem}
+  .global-search{margin-top:1rem}
+  .global-result-button{border-radius:22px}
+  .empty{border:0;border-radius:22px;background:#20222b;padding:1.1rem}
+}
