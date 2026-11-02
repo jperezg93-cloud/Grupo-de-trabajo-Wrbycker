@@ -353,7 +353,7 @@ test("global search is bundled in both publication modes without changing stored
     assert.equal((html.match(/id="global-search-input"/g)||[]).length, 1);
     assert.ok(html.includes('id="global-search-results"'));
     assert.ok(html.includes('aria-live="polite"'));
-    assert.ok(html.includes('href="../marca.html"'));
+    assert.ok(html.includes('href="https://linktr.ee/wrbycker"'));
     assert.ok(html.includes("v1.2.0"));
     assert.ok(js.includes("D.searchRecords(model, query, 25)"));
     assert.ok(js.includes('$("#global-search-input").addEventListener("input", searchAll)'));
