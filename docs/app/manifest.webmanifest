@@ -1,6 +1,6 @@
 {
   "name": "Wrbycker Control Center",
-  "short_name": "Wrbycker",
+  "short_name": "Control Center",
   "description": "Centro de control local para organizar tareas, ideas, prompts, personajes y workflows sin enviar tus datos a un servidor.",
   "start_url": "./index.html",
   "scope": "./",
