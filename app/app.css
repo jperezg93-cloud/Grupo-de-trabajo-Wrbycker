@@ -358,3 +358,15 @@ select{cursor:pointer}
   .global-result-button{border-radius:22px}
   .empty{border:0;border-radius:22px;background:#20222b;padding:1.1rem}
 }
+
+
+/* Mobile dock clearance — live-device fix */
+@media(max-width:750px){
+  html{scroll-padding-bottom:calc(116px + env(safe-area-inset-bottom,0px))}
+  .shell{padding-bottom:calc(124px + env(safe-area-inset-bottom,0px))}
+  main{padding-bottom:calc(124px + env(safe-area-inset-bottom,0px))}
+  .view{padding-bottom:calc(24px + env(safe-area-inset-bottom,0px))}
+  .overview-grid,.mini-metrics,.settings-grid,.workspace-grid,.global-search,.privacy-note{
+    scroll-margin-bottom:calc(116px + env(safe-area-inset-bottom,0px));
+  }
+}
