@@ -355,13 +355,6 @@
   }
 
   function wireEvents() {
-    for (const btn of $$("[data-view]")) btn.addEventListener("click", () => openView(btn.dataset.view));
-    for (const btn of $$("[data-go]")) btn.addEventListener("click", () => openView(btn.dataset.go));
-    $("#dock-more").addEventListener("click", () => {
-      const menu = $("#dock-more-menu");
-      menu.hidden = !menu.hidden;
-      $("#dock-more").setAttribute("aria-expanded", String(!menu.hidden));
-    });
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape" && !$("#dock-more-menu").hidden) {
         $("#dock-more-menu").hidden = true;
@@ -542,7 +535,7 @@
         .then(async () => {
           const cacheNames = await caches.keys();
           const here = new URL("./", location.href).pathname.replace(/[^a-z0-9]/gi, "-");
-          const matches = cacheNames.some((name) => name === "wrbycker-control-" + here + "-v14");
+          const matches = cacheNames.some((name) => name === "wrbycker-control-" + here + "-v15");
           updateStatus(matches ? "Acceso sin conexión preparado ✓" :
             "Caché sin conexión pendiente. Abre esta app con internet.");
         })
