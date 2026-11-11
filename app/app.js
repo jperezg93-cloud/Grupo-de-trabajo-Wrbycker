@@ -356,7 +356,7 @@
 
   function wireEvents() {
     for (const btn of $$("[data-view]")) btn.addEventListener("click", () => openView(btn.dataset.view));
-    for (const btn of $("[data-go]")) btn.addEventListener("click", () => openView(btn.dataset.go));
+    for (const btn of $$("[data-go]")) btn.addEventListener("click", () => openView(btn.dataset.go));
     $("#dock-more").addEventListener("click", () => {
       const menu = $("#dock-more-menu");
       menu.hidden = !menu.hidden;
