@@ -226,5 +226,45 @@
     </div>
   </div>
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <script>
+    // Navigation fallback: independent of the application module.
+    (() => {
+      const root = document;
+      root.addEventListener("click", (event) => {
+        const more = event.target.closest("#dock-more");
+        if (more) {
+          const menu = root.getElementById("dock-more-menu");
+          if (!menu) return;
+          menu.hidden = !menu.hidden;
+          more.setAttribute("aria-expanded", String(!menu.hidden));
+          return;
+        }
+        const control = event.target.closest("[data-view], [data-go]");
+        if (!control) return;
+        const view = control.dataset.view || control.dataset.go;
+        const known = ["overview", "tasks", "ideas", "prompts", "characters", "flows", "workspace", "settings"];
+        if (!known.includes(view)) return;
+        for (const section of root.querySelectorAll(".view")) {
+          const active = section.id === "view-" + view;
+          section.hidden = !active;
+          section.classList.toggle("is-visible", active);
+        }
+        for (const nav of root.querySelectorAll("[data-view]")) {
+          const active = nav.dataset.view === view;
+          nav.classList.toggle("is-active", active);
+          if (active) nav.setAttribute("aria-current", "page");
+          else nav.removeAttribute("aria-current");
+        }
+        const menu = root.getElementById("dock-more-menu");
+        if (menu) menu.hidden = true;
+        const button = root.getElementById("dock-more");
+        if (button) button.setAttribute("aria-expanded", "false");
+        history.replaceState(null, "", "#" + view);
+        const heading = root.querySelector("#view-" + view + " h1");
+        if (heading) heading.focus({ preventScroll: true });
+        window.scrollTo({ top: 0, behavior: "auto" });
+      });
+    })();
+  </script>
 </body>
 </html>
