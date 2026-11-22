@@ -355,6 +355,26 @@
   }
 
   function wireEvents() {
+    // Single navigation owner for desktop, mobile dock and overview shortcuts.
+    const moreButton = $("#dock-more");
+    const moreMenu = $("#dock-more-menu");
+    moreButton.addEventListener("click", (event) => {
+      event.stopPropagation();
+      moreMenu.hidden = !moreMenu.hidden;
+      moreButton.setAttribute("aria-expanded", String(!moreMenu.hidden));
+    });
+    for (const btn of $("[data-view]")) {
+      btn.addEventListener("click", () => openView(btn.dataset.view));
+    }
+    for (const btn of $("[data-go]")) {
+      btn.addEventListener("click", () => openView(btn.dataset.go));
+    }
+    document.addEventListener("click", (event) => {
+      if (!moreMenu.hidden && !moreMenu.contains(event.target) && !moreButton.contains(event.target)) {
+        moreMenu.hidden = true;
+        moreButton.setAttribute("aria-expanded", "false");
+      }
+    });
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape" && !$("#dock-more-menu").hidden) {
         $("#dock-more-menu").hidden = true;
