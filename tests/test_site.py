@@ -97,6 +97,26 @@ class SiteTests(unittest.TestCase):
                 self.assertIn('url=' + expected, shim)
                 self.assertNotIn("linktr.ee", actual.lower())
 
+    def test_v31_premium_gateway_preserves_canon_links_and_brand(self):
+        original = (DOCS / "laboratorio/puerta-v3/index.html").read_text(encoding="utf-8")
+        refined = (DOCS / "laboratorio/puerta-v31/index.html").read_text(encoding="utf-8")
+        fallback = (DOCS.parent / "laboratorio/puerta-v31/index.html").read_text(encoding="utf-8")
+        logo_pattern = r'<img alt="Monograma wb original de WrBycker" src="([^"]+)"'
+        original_logo = re.search(logo_pattern, original)
+        refined_logo = re.search(logo_pattern, refined)
+        self.assertIsNotNone(original_logo)
+        self.assertIsNotNone(refined_logo)
+        self.assertEqual(original_logo.group(1), refined_logo.group(1))
+        external_links = r'href="(https?://[^"]+)"'
+        self.assertEqual(sorted(re.findall(external_links, original)),
+                         sorted(re.findall(external_links, refined)))
+        self.assertIn("No porque se haga igual", refined)
+        self.assertIn("background:#030305", refined)
+        self.assertIn("backdrop-filter:blur(16px)", refined)
+        self.assertIn("prefers-reduced-motion", refined)
+        self.assertNotIn("<script", refined)
+        self.assertIn("url=../../docs/laboratorio/puerta-v31/", fallback)
+
     def test_root_brand_link_works_in_both_pages_modes(self):
         root = DOCS.parent
         root_entry = (root / "marca.html").read_text(encoding="utf-8")
