@@ -363,10 +363,10 @@
       moreMenu.hidden = !moreMenu.hidden;
       moreButton.setAttribute("aria-expanded", String(!moreMenu.hidden));
     });
-    for (const btn of $("[data-view]")) {
+    for (const btn of $$("[data-view]")) {
       btn.addEventListener("click", () => openView(btn.dataset.view));
     }
-    for (const btn of $("[data-go]")) {
+    for (const btn of $$("[data-go]")) {
       btn.addEventListener("click", () => openView(btn.dataset.go));
     }
     document.addEventListener("click", (event) => {
@@ -555,7 +555,7 @@
         .then(async () => {
           const cacheNames = await caches.keys();
           const here = new URL("./", location.href).pathname.replace(/[^a-z0-9]/gi, "-");
-          const matches = cacheNames.some((name) => name === "wrbycker-control-" + here + "-v15");
+          const matches = cacheNames.some((name) => name === "wrbycker-control-" + here + "-v16");
           updateStatus(matches ? "Acceso sin conexión preparado ✓" :
             "Caché sin conexión pendiente. Abre esta app con internet.");
         })
