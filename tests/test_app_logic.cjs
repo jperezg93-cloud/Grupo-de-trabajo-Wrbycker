@@ -387,7 +387,10 @@ test("v1.2 mobile Creative Workspace uses existing modules and preserved local d
     assert.ok(css.includes('prefers-reduced-motion'));
     assert.ok(js.includes('$("#bento-pending").textContent'));
     assert.ok(js.includes('moreButton.addEventListener("click"'));
-    assert.ok(js.includes('for (const btn of $("[data-go]")) {'), "all shortcut buttons must be wired");
+    assert.ok(js.includes('for (const btn of $("[data-view]")) {'), "all navigation buttons must use querySelectorAll");
+    assert.ok(js.includes('for (const btn of $("[data-go]")) {'), "all shortcut buttons must use querySelectorAll");
+    assert.equal(js.includes('for (const btn of $("[data-view]")) {'), false, "do not iterate a single DOM element");
+    assert.equal(js.includes('for (const btn of $("[data-go]")) {'), false, "do not iterate a single DOM element");
     assert.ok(js.includes('const moreMenu = $("#dock-more-menu")'), "More menu must be wired after shortcut handlers");
     assert.ok(js.includes('"wrbycker.control-center.v1"'));
     assert.ok(sw.includes('PREFIX + "v15"'));
