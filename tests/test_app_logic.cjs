@@ -263,13 +263,13 @@ test("JSON restore control has one visible accessible picker in both builds", ()
   }
 });
 
-test("offline app and readiness check use the current v15 cache", () => {
+test("offline app and readiness check use the current v16 cache", () => {
   for (const folder of ["app", "docs/app"]) {
     const root = path.join(__dirname, "..", folder);
     const sw = fs.readFileSync(path.join(root, "sw.js"), "utf8");
     const js = fs.readFileSync(path.join(root, "app.js"), "utf8");
-    assert.ok(sw.includes('const CACHE = PREFIX + "v15";'));
-    assert.ok(js.includes('"-v15"'));
+    assert.ok(sw.includes('const CACHE = PREFIX + "v16";'));
+    assert.ok(js.includes('"-v16"'));
   }
 });
 
@@ -360,8 +360,8 @@ test("global search is bundled in both publication modes without changing stored
     assert.ok(js.includes("VISTA PREVIA DEL RESPALDO"));
     assert.ok(css.includes(".global-result-button"));
     assert.ok(logic.includes("function searchRecords("));
-    assert.ok(js.includes('"-v15"'));
-    assert.ok(fs.readFileSync(path.join(root,"sw.js"),"utf8").includes('PREFIX + "v15"'));
+    assert.ok(js.includes('"-v16"'));
+    assert.ok(fs.readFileSync(path.join(root,"sw.js"),"utf8").includes('PREFIX + "v16"'));
   }
   assert.equal(D.VERSION, 1);
   assert.deepEqual(D.blank(), {version:1,tasks:[],ideas:[],prompts:[],characters:[],workflows:[]});
@@ -393,7 +393,7 @@ test("v1.2 mobile Creative Workspace uses existing modules and preserved local d
     assert.equal(js.includes('for (const btn of $("[data-go]")) {'), false, "do not iterate a single DOM element");
     assert.ok(js.includes('const moreMenu = $("#dock-more-menu")'), "More menu must be wired after shortcut handlers");
     assert.ok(js.includes('"wrbycker.control-center.v1"'));
-    assert.ok(sw.includes('PREFIX + "v15"'));
+    assert.ok(sw.includes('PREFIX + "v16"'));
   }
   const data = D.blank();
   data.tasks.push(task());
