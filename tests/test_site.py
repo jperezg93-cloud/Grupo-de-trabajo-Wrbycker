@@ -84,6 +84,19 @@ class SiteTests(unittest.TestCase):
                          .replace('../docs/brand/wb-icon.svg', '../brand/wb-icon.svg'),
                          docs_html)
 
+    def test_gateway_urls_work_with_both_pages_publish_roots(self):
+        # Custom workflow publishes docs/; automatic Pages publishes repository root.
+        root = DOCS.parent
+        for short_path in ("puerta/index.html", "laboratorio/puerta-v2/index.html"):
+            with self.subTest(path=short_path):
+                actual = (DOCS / short_path).read_text(encoding="utf-8")
+                shim = (root / short_path).read_text(encoding="utf-8")
+                self.assertIn("<!doctype html>", actual.lower())
+                self.assertIn('http-equiv="refresh"', shim)
+                expected = "../docs/puerta/" if short_path.startswith("puerta/") else "../../docs/laboratorio/puerta-v2/"
+                self.assertIn('url=' + expected, shim)
+                self.assertNotIn("linktr.ee", actual.lower())
+
     def test_root_brand_link_works_in_both_pages_modes(self):
         root = DOCS.parent
         root_entry = (root / "marca.html").read_text(encoding="utf-8")
