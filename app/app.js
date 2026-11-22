@@ -363,10 +363,10 @@
       moreMenu.hidden = !moreMenu.hidden;
       moreButton.setAttribute("aria-expanded", String(!moreMenu.hidden));
     });
-    for (const btn of $("[data-view]")) {
+    for (const btn of $$("[data-view]")) {
       btn.addEventListener("click", () => openView(btn.dataset.view));
     }
-    for (const btn of $("[data-go]")) {
+    for (const btn of $$("[data-go]")) {
       btn.addEventListener("click", () => openView(btn.dataset.go));
     }
     document.addEventListener("click", (event) => {
