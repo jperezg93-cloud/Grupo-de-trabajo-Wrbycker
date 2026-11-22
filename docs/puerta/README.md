@@ -1,6 +1,6 @@
 # Puerta Principal WrBycker — preparación segura
 
-Estado: **pendiente de incorporar el HTML original**. Esta rama es de preparación; no se ha desplegado ni sustituido ninguna página.
+Estado: **HTML original incorporado en esta rama**. La publicación pública depende de integrar la rama y confirmar el despliegue. No se ha sustituido ninguna página.
 
 ## Fuente aprobada
 
@@ -26,4 +26,4 @@ Para revertir el despliegue, se revierte exclusivamente el commit que añade `do
 
 ## Seguimiento
 
-El archivo fuente original tiene que añadirse desde el paquete de continuidad sin transformarlo en una imitación. No se debe marcar la publicación como terminada hasta verificar el despliegue real.
+El HTML aprobado ya se añadió sin cambios de contenido desde el respaldo. No marcar publicación terminada hasta verificar el despliegue real.
