@@ -75,6 +75,10 @@ La sección [Habilidades para agentes](docs/habilidades.html) explica la diferen
 
 **Publicar una habilidad en el repositorio no la instala en ChatGPT o Codex, ni habilita por sí mismo un servidor MCP.** Cada entorno requiere instalación/configuración propias y permisos para usar herramientas. No se solicitan claves en la web ni se realizan llamadas a modelos para la guía.
 
+## WRBYCKER LAB: consistencia antes que promesas
+
+Una [bitácora de prueba exploratoria](docs/consistencia.html) documenta observaciones del creador al comparar la fidelidad de identidad de un personaje entre distintos entornos de generación de imágenes (Nano Banana Pro, Seedream 5.0 Pro y ChatGPT Plus). Las capturas y los datos reproducibles aún están pendientes de incorporarse. No se trata de una evaluación independiente ni de un ranking general de modelos.
+
 ## Web y documentación
 
 El sitio estático está en [`docs/index.html`](docs/index.html) y se puede abrir sin servidor. Hay un workflow preparado para desplegarlo mediante GitHub Pages **cuando se configure GitHub Pages como origen GitHub Actions** en Settings → Pages. No afirma ejecutar IA en el navegador y no solicita API keys.
