@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0B0E19">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="Bitácora de WRBYCKER: prueba exploratoria sobre consistencia, fidelidad y eficiencia en generación de personajes con IA.">
+  <title>Consistencia sobre promesas · WRBYCKER LAB</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .case-wrap{max-width:920px;padding-top:5rem;padding-bottom:6rem}
+    .case-wrap h1{font-size:clamp(2.45rem,6vw,4.8rem);margin:1.25rem 0}
+    .case-lead{font-size:1.18rem;color:var(--muted);max-width:760px}
+    .case-note,.case-panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:1.5rem;margin:1.5rem 0}
+    .case-note{border-left:4px solid var(--mint)}
+    .case-note p:last-child,.case-panel p:last-child{margin-bottom:0}
+    .case-note strong{color:var(--mint)}
+    .case-section{margin-top:3.5rem}
+    .case-section h2{font-size:clamp(1.7rem,4vw,2.6rem)}
+    .case-section p,.case-section li{color:var(--muted)}
+    .case-section li{margin:.65rem 0}
+    .case-table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px}
+    .case-table{width:100%;border-collapse:collapse;min-width:610px}
+    .case-table th,.case-table td{padding:1rem;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+    .case-table th{font-size:.75rem;letter-spacing:.09em;color:var(--mint);background:#161e32;text-transform:uppercase}
+    .case-table td{color:var(--muted)}
+    .case-table tr:last-child td{border-bottom:0}
+    .case-table td:first-child{color:var(--text);font-weight:700}
+    .case-quote{font-size:clamp(1.35rem,3.3vw,2rem);line-height:1.4;color:var(--text);font-weight:750;border-left:3px solid var(--brand-violet);padding-left:1.2rem;margin:2rem 0}
+    .case-links{display:flex;gap:1rem;flex-wrap:wrap;margin-top:1rem}
+    .case-links a{color:var(--mint);text-decoration:underline;text-underline-offset:3px}
+    .case-small{font-size:.86rem;color:var(--muted)}
+    @media(max-width:760px){.case-wrap{padding-top:3rem}.case-note,.case-panel{padding:1.1rem}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#contenido">Saltar al contenido</a>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="index.html" aria-label="Volver a WRBYCKER Agent Lab"><img class="brand-mark" src="brand/wb-icon.svg" width="45" height="45" alt="" aria-hidden="true"><span>WRBYCKER <small>AGENT LAB</small></span></a>
+      <a class="nav-github" href="index.html">← Volver al inicio</a>
+    </div>
+  </header>
+  <main class="container case-wrap" id="contenido">
+    <p class="section-kicker">WRBYCKER / BITÁCORA DE PRUEBAS / NOVIEMBRE 2026</p>
+    <h1>Menos promesas.<br><em>Más consistencia.</em></h1>
+    <p class="case-lead">Un estudio de caso sobre generación de personajes con IA: seguir instrucciones, conservar una identidad y lograr resultados útiles sin desperdiciar generaciones.</p>
+    <div class="case-note" role="note">
+      <strong>Estado de la evidencia: relato inicial del creador.</strong>
+      <p>Las observaciones que siguen provienen de pruebas realizadas por WRBYCKER. Se está preparando la publicación de capturas, prompts, configuraciones y registros originales. Esta página no presenta una auditoría independiente ni un ranking universal de modelos.</p>
+    </div>
+
+    <section class="case-section" aria-labelledby="filosofia-title">
+      <div class="section-kicker">01 / FILOSOFÍA</div>
+      <h2 id="filosofia-title">«No porque se haga igual, va a ser igual».</h2>
+      <p>WRBYCKER no elige una herramienta por el precio del plan, por su popularidad o por una demostración espectacular. La evalúa por su fidelidad al objetivo del creador, su continuidad y el costo real de conseguir un resultado aprobado.</p>
+      <p class="case-quote">Una IA capaz de impresionar una vez no es necesariamente una IA capaz de trabajar contigo de forma consistente.</p>
+    </section>
+
+    <section class="case-section" aria-labelledby="metodo-title">
+      <div class="section-kicker">02 / PRUEBA EXPLORATORIA</div>
+      <h2 id="metodo-title">El mismo personaje. La misma intención.</h2>
+      <p>El caso se centró en <strong>Pokie</strong>, un personaje de identidad visual definida. El creador comparó generaciones con una imagen de referencia y un prompt que pedía cambiar pose y encuadre, manteniendo constantes los rasgos faciales y corporales, y evitando un acabado artificial.</p>
+      <ul>
+        <li><strong>Herramientas observadas:</strong> Nano Banana Pro en Gemini, Google AI Studio y Google Flow; Seedream 5.0 Pro; y generación desde ChatGPT Plus.</li>
+        <li><strong>Variables que debían conservarse:</strong> estructura facial, pecas, cabello, proporciones corporales e identidad reconocible del personaje.</li>
+        <li><strong>Variables que podían cambiar:</strong> pose, encuadre, iluminación, composición y vestuario cuando se solicitara.</li>
+        <li><strong>Contextos probados:</strong> el creador reporta pruebas con distintas configuraciones de filtros, incluido AI Studio. Esos entornos no deben considerarse técnicamente idénticos sin registrar versiones y parámetros.</li>
+      </ul>
+    </section>
+
+    <section class="case-section" aria-labelledby="observaciones-title">
+      <div class="section-kicker">03 / OBSERVACIONES DEL CREADOR</div>
+      <h2 id="observaciones-title">El resultado útil es la medida.</h2>
+      <div class="case-table-wrap">
+        <table class="case-table">
+          <thead><tr><th scope="col">Entorno</th><th scope="col">Observación reportada</th></tr></thead>
+          <tbody>
+            <tr><td>Nano Banana Pro / Gemini, AI Studio y Flow</td><td>Se observaron cambios no solicitados en rasgos y resultados diferentes entre entornos; algunas pruebas requirieron regeneración o perdieron continuidad.</td></tr>
+            <tr><td>Seedream 5.0 Pro</td><td>Se percibió mayor seguimiento de la intención visual, pero hubo cambios en rasgos faciales y proporciones corporales.</td></tr>
+            <tr><td>ChatGPT Plus</td><td>En la secuencia evaluada por el creador, los resultados fueron aprobados sin desperdiciar regeneraciones y mantuvieron mejor la identidad percibida del personaje.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="case-small">Estos son resultados declarados de una experiencia de uso concreta. No prueban que un modelo sea superior en todas las tareas. Faltan registros reproducibles y puntuación ciega antes de extraer conclusiones generales.</p>
+    </section>
+
+    <section class="case-section" aria-labelledby="eficiencia-title">
+      <div class="section-kicker">04 / EFICIENCIA REAL</div>
+      <h2 id="eficiencia-title">La cuota consumida también cuenta.</h2>
+      <div class="case-panel">
+        <p><strong>Consistencia:</strong> conservar lo que el usuario no pidió modificar.</p>
+        <p><strong>Fidelidad:</strong> ejecutar la intención sin sustituirla por la preferencia estética de la herramienta.</p>
+        <p><strong>Eficiencia:</strong> minimizar regeneraciones, tiempo y créditos para alcanzar un resultado aprobado.</p>
+        <p><strong>Métrica propuesta:</strong> costo por resultado aprobado = costo total de las generaciones / número de resultados aprobados. Se debe distinguir entre cuotas de suscripción, créditos y precios API, que no son directamente equivalentes.</p>
+      </div>
+      <p>La prueba plantea una pregunta práctica: si una herramienta exige repetir varias veces el mismo pedido, ¿cuánto cuesta realmente cada resultado utilizable?</p>
+    </section>
+
+    <section class="case-section" aria-labelledby="transparencia-title">
+      <div class="section-kicker">05 / TRANSPARENCIA</div>
+      <h2 id="transparencia-title">Evidencia antes que eslóganes.</h2>
+      <p>Para completar esta bitácora se incorporarán, con autorización del creador, la imagen de referencia, muestras de salida, prompt íntegro, fechas, versiones, ajustes, número de generaciones y criterios de aceptación. Hasta entonces, las observaciones permanecen identificadas como tales.</p>
+      <p>No se publicarán por defecto imágenes personales o material de uso privado. Las comparaciones se presentarán con los límites del ensayo, sin atribuir intenciones a otros sistemas ni convertir una experiencia en una verdad universal.</p>
+      <div class="case-links"><a href="index.html">Volver a Agent Lab</a><a href="app/">Abrir Control Center</a></div>
+    </section>
+  </main>
+  <footer class="footer"><div class="container footer-inner"><p><strong>WRBYCKER</strong> / CONSISTENCIA Y EFICIENCIA</p><p>Estudio de caso exploratorio · No patrocinado · 2026</p></div></footer>
+</body>
+</html>
